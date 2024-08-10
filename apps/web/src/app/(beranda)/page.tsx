@@ -1,15 +1,26 @@
-import Link from 'next/link';
+
+
+import Acara from "@/components/beranda/acara";
+import Category from "../../components/beranda/category";
+import Hero from "../../components/beranda/hero";
+import Card from "@/components/beranda/card";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+
+
 
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-blue-500">Hello World</h1>
-      <Link href={'/login'} className="bg-violet-300 px-2 py-1">
-        login
-      </Link>
-      <Link href={'/register'} className="bg-violet-300 px-2 py-1">
-        register
-      </Link>
+
+    <div className="min-w-full">
+      <Header/>
+      <Hero />
+      <Category />
+      <Acara/>
+      <Footer/>
+    
+
+
     </div>
   );
 }
