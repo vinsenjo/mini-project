@@ -1,4 +1,5 @@
 
+
 import Acara from "@/components/beranda/acara";
 import Category from "../../components/beranda/category";
 import Hero from "../../components/beranda/hero";
@@ -18,6 +19,7 @@ export default function Home() {
       <Acara/>
       <Footer/>
     
+
 
     </div>
   );
