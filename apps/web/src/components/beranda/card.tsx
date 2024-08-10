@@ -18,8 +18,8 @@ export default function Card() {
     ]
 
     return (
-        <section className="flex lg:flex-row flex-col gap-4 pb-3 ">
-            {/* card acara */}
+        <section className="flex lg:flex-row flex-col gap-4 pb-3 pt-6">
+            
             {data.map((item, key) => (
                 <div className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
                     <figure>

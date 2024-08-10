@@ -16,14 +16,14 @@ export default function Acara() {
             </div>
 
             {/* waktu */}
-            <div className=" lg:py-5 lg:px-20  top-1 flex flex-row font-sans items-center gap-2 lg:gap-7 ">
+            {/* <div className=" lg:py-5 lg:px-20  top-1 flex flex-row font-sans items-center gap-2 lg:gap-7 ">
                 <p className="text-black  hover:text-[#FF7B4F] hover:underline hover:font-bold">All</p>
                 <p className="text-black hover:text-[#FF7B4F] hover:underline hover:font-bold">Today</p>
                 <p className="text-black hover:text-[#FF7B4F] hover:underline hover:font-bold">Tomorrow</p>
                 <p className="text-black hover:text-[#FF7B4F] hover:underline hover:font-bold">This Week</p>
                 <p className="text-black hover:text-[#FF7B4F] hover:underline hover:font-bold">Next Week</p>
                 <p className="text-black hover:text-[#FF7B4F] hover:underline hover:font-bold">This Month</p>
-            </div>
+            </div> */}
             <Card/>
         </section>
     )
