@@ -12,13 +12,13 @@ export default function Acara() {
 
             {/* location */}
             <div className="px-10 flex gap-7 ">
-                <select className="select select-accent w-full max-w-xs h-10 ">
+                <select className="select select-accent w-[150px] max-w-xs h-10 rounded-md p-1">
                     <option disabled selected>City</option>
                     <option>Bandung</option>
                     <option>Surabaya</option>
                     <option>Bali</option>
                 </select>
-                <DatePicker className=" w-full max-w-xs h-10" selected={startDate} onChange={(date) => setStartDate(date!)} />
+                <DatePicker className=" w-[150px] max-w-xs h-10 rounded-md p-2" selected={startDate} onChange={(date) => setStartDate(date!)} />
             </div>
           
             <Card />

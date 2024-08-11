@@ -18,28 +18,29 @@ export default function Card() {
     ]
 
     return (
-        <section className="flex lg:flex-row flex-col gap-4 pb-3 pt-6">
-            
-            {data.map((item, key) => (
-                <div key={key} className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
-                    <figure>
-                        <img
-                            src={item.img}
-                            alt="Music"
-                            className="rounded-2xl" />
-                    </figure>
-                    <div className="card-body px-5 pt-3 pb-8">
-                        <h2 className="card-title font-extrabold">{item.judul}</h2>
-                        <p>{item.tanggal}</p>
-                        <p className="text-slate-400">{item.tempat}</p>
-                        <p className="text-red-700">{`IDR ${item.harga}`}</p>
-                        <div className="card-actions flex justify-center pt-3">
-                            <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"><Link href="/detail" passHref >Buy Now</Link></button>
+      
+            <section className="flex lg:flex-row flex-col gap-4 pb-3 pt-6 px-8">
+                {data.map((item, key) => (
+                    <div key={key} className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
+                        <figure>
+                            <img
+                                src={item.img}
+                                alt="Music"
+                                className="rounded-2xl" />
+                        </figure>
+                        <div className="card-body px-5 pt-3 pb-8">
+                            <h2 className="card-title font-extrabold">{item.judul}</h2>
+                            <p>{item.tanggal}</p>
+                            <p className="text-slate-400">{item.tempat}</p>
+                            <p className="text-red-700">{`IDR ${item.harga}`}</p>
+                            <div className="card-actions flex justify-center pt-3">
+                                <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"><Link href="/detail" passHref >Buy Now</Link></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
 
-        </section>
+            </section>
+      
     )
 }
