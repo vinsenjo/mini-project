@@ -5,9 +5,9 @@ import { BsPlusCircle } from "react-icons/bs";
 
 
 export default function Confirm() {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(1)
     function mincounter() {
-        if (count > 0) setCount(count - 1)
+        if (count > 1) setCount(count - 1)
     }
 
     return (
