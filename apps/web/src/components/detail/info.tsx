@@ -33,7 +33,7 @@ export default function InfoEvent() {
                 {/* ticket */}
                 <div className="lg:pt-24 lg:px-28 pt-5 px-4 pb-12 ">
                     <div className="card bg-white w-96 shadow-xl h-16 rounded-lg">       
-                            <div className="card-actions flex justify-center pt-4">
+                            <div className="card-actions flex justify-center pt-2">
                                 <button className="btn btn-primary border-2 font-semibold rounded-sm border-[#FF7B4F] bg-[#FF7B4F] text-white h-9 w-[300px] " onClick={() => (document.getElementById('my_modal_3') as HTMLFormElement).showModal() }>See Tickets</button>   
                             </div>
                     </div>

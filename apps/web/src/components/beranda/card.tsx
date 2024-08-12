@@ -19,7 +19,7 @@ export default function Card() {
 
     return (
       
-            <section className="flex lg:flex-row flex-col gap-4 pb-3 pt-6 px-8">
+            <section className="flex lg:flex-row flex-col gap-4 p-6">
                 {data.map((item, key) => (
                     <div key={key} className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
                         <figure>

@@ -6,7 +6,7 @@ export default function Pay() {
             <h1 className="font-semibold">Pay With</h1>
             <div className="flex justify-center">
                 <input type="radio" name="" id=""  defaultChecked/>
-                <button className="rounded-xs bg-slate-200 flex w-[250px] h-7"> Go Pey</button>
+                <button className="rounded-xs bg-slate-200 flex w-[250px] h-7"> Go Pay</button>
                 <IoWallet className=" flex justify-end bg-slate-200 h-7" />
             </div>
             <div className=" flex justify-center pt-10">
