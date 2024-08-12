@@ -10,7 +10,9 @@ import express, {
 import cors from 'cors';
 import { PORT } from './config';
 // import { SampleRouter } from './routers/sample.router';
-import { AuthRouter } from './routers/auth.router';
+import { AuthRouterUser } from './routers/authUser.router';
+import { AuthEo } from './controllers/authEo.controller';
+import { AuthRouterEo } from './routers/authEo.router';
 export default class App {
   private app: Express;
 
@@ -61,13 +63,14 @@ export default class App {
   // }
 
   private routes(): void {
-    const authRouter = new AuthRouter();
-
+    const userAuth = new AuthRouterUser();
+    const eoAuth = new AuthRouterEo();
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
 
-    this.app.use('/api/auth', authRouter.getRouter());
+    this.app.use('/api/user', userAuth.getRouter());
+    this.app.use('/api/eo', eoAuth.getRouter());
   }
 
   public start(): void {
