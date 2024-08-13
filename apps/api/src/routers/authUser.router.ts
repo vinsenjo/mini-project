@@ -1,7 +1,7 @@
-import { AuthUser } from '@/controllers/auth.controller';
+import { AuthUser } from '@/controllers/authUser.controller';
 import { Router } from 'express';
 
-export class AuthRouter {
+export class AuthRouterUser {
   private router: Router;
   private authUser: AuthUser;
 
