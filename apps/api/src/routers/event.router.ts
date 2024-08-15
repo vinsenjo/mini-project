@@ -11,5 +11,11 @@ export class EventRouter {
   }
   private initializeRoutes(): void {
     this.router.post('/', this.eventController.createEvent);
+    this.router.get('/event', this.eventController.getEvent);
+    this.router.get('/event/:id', this.eventController.getEventId);
+  }
+
+  getRouter():Router{
+    return this.router
   }
 }

@@ -13,8 +13,8 @@ export default function Card() {
     const data: IData[] = [
         { img: '/img/Synchronize Fest.jpeg', judul: 'Synchronize Fest', tanggal: 'Sat, Dec 14 • 14:00 AM', tempat: 'lapangan persuasif bandung', harga: 299.512 },
         { img: '/img/jj3.jpeg', judul: 'Java Jazz', tanggal: 'Sat, Octa 19 • 20:00 PM', tempat: 'JX Internasional, Surabaya', harga: 799.512 },
-        { img: '/img/so71.jpeg', judul: 'sheila on7', tanggal: 'Sat, Dec 14 • 18:00 PM', tempat: 'Candi Prambanan', harga: 399.512 },
-        { img: '/img/Synchronize Fest.jpeg', judul: 'Synchronize Fest', tanggal: 'Sat, Dec 14 • 14:00 AM', tempat: 'lapangan persuasif bandung', harga: 0 },
+        { img: '/img/so71.jpeg', judul: 'Hammersonic', tanggal: 'Sat, Dec 14 • 18:00 PM', tempat: 'Candi Prambanan', harga: 399.512 },
+        { img: '/img/Synchronize Fest.jpeg', judul: 'Soundrenaline', tanggal: 'Sat, Dec 14 • 14:00 AM', tempat: 'lapangan persuasif bandung', harga: 0 },
     ]
 
     return (

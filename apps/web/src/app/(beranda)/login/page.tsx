@@ -15,6 +15,8 @@ import LoginLine from './_components/login_hr_line';
 import Link from 'next/link';
 import { UserLogin } from '@/types/user';
 import { loginUser } from '@/libs/actions/user';
+import {  ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const onLogin = async (data: UserLogin) => {
   try {
@@ -26,6 +28,9 @@ const onLogin = async (data: UserLogin) => {
 };
 
 export default function Login() {
+
+  const notify = () => toast.success("Login success");
+
   const initialValues: UserLogin = { data: '', password: '' };
 
   return (
@@ -59,7 +64,7 @@ export default function Login() {
               onSubmit={(values, actions) => {
                 onLogin(values);
 
-                alert('login succes');
+                // alert('login succes');
                 actions.resetForm();
               }}
             >
@@ -84,12 +89,13 @@ export default function Login() {
                             placeholder="Password"
                           />
                         </div>
-                        <button
+                        <button onClick={notify}
                           type="submit"
                           className="bg-[#ff784b] lg:border-2 lg:border-[#ff784b] text-black py-2 rounded-full font-semibold  w-full  hover:bg-black hover:text-white  duration-100"
                         >
                           Sign In
                         </button>
+                        <ToastContainer />
                       </div>
                     </Form>
                   </div>

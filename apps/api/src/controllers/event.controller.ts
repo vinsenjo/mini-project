@@ -25,6 +25,24 @@ export class EventController {
   }
   async getEvent(req: Request, res: Response) {
     try {
-    } catch (error) {}
+      const event = await prisma.event.findMany()
+      res.status(200).send({
+        status: "ok",
+        event
+      })
+    } catch (error) {
+      res.status(400).send({
+        status: "Failed",
+        msg: error
+      })
+    }
+  }
+  async getEventId(req:Request, res:Response){
+    try {
+      // const event = await prisma.event.findUnique()
+
+    } catch (error) {
+      
+    }
   }
 }
