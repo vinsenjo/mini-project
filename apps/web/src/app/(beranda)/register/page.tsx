@@ -7,16 +7,18 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import {ToastContainer,toast} from 'react-toastify'
 export default function Register() {
   const router = useRouter();
+  const notify = () => toast.info('Wow so easy!');
   const onRegister = async (data: ISignUp) => {
     try {
       const res = await registerUser(data);
       if (res.status == 'error') throw res.msg;
+      // toast('User registered');
       router.push('/');
     } catch (error) {
-      // toast.error(error as string)
+      toast.error(error as string);
       console.log(error);
     }
   };
@@ -76,6 +78,7 @@ export default function Register() {
                 </div>
               </Form>
               <HasReg />
+              <button onClick={notify}>asd</button>
             </div>
           );
         }}
