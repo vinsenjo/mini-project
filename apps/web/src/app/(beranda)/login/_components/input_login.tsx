@@ -10,7 +10,7 @@ interface InputProps {
 export const Input: React.FC<InputProps> = ({ name, type, placeholder }) => {
   return (
     <div>
-      <Field
+      <Field 
         type={type}
         placeholder={placeholder}
         name={name}

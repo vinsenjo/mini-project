@@ -7,8 +7,15 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import {  ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Register() {
+
+  const notify = () => {
+    toast("Register sukses")
+  }
+
   const router = useRouter();
   const onRegister = async (data: ISignUp) => {
     try {
@@ -67,12 +74,13 @@ export default function Register() {
                     name="referral"
                     placeholder="refferal number"
                   />
-                  <button
+                  <button onClick={notify}
                     type="submit"
                     className=" bg-[#ff784b]  text-black w-[300px] md:min-w-[500px] py-4 rounded-full font-semibold hover:bg-black hover:text-white duration-100"
                   >
                     Sign Up
                   </button>
+                  <ToastContainer />
                 </div>
               </Form>
               <HasReg />

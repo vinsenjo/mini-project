@@ -48,7 +48,7 @@ enum Category {
   music
   anime
   game
-  festival
+  sport
 }
 
 model Event {

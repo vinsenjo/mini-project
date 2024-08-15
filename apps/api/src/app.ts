@@ -13,6 +13,8 @@ import { PORT } from './config';
 import { AuthRouterUser } from './routers/authUser.router';
 import { AuthEo } from './controllers/authEo.controller';
 import { AuthRouterEo } from './routers/authEo.router';
+import { EventController } from './controllers/event.controller';
+import { EventRouter } from './routers/event.router';
 export default class App {
   private app: Express;
 
@@ -65,12 +67,15 @@ export default class App {
   private routes(): void {
     const userAuth = new AuthRouterUser();
     const eoAuth = new AuthRouterEo();
+    const event = new EventRouter();
+
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
 
     this.app.use('/api/user', userAuth.getRouter());
     this.app.use('/api/eo', eoAuth.getRouter());
+    this.app.use('/api/event', event.getRouter())
   }
 
   public start(): void {
