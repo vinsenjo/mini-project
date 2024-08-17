@@ -15,24 +15,26 @@ import LoginLine from './_components/login_hr_line';
 import Link from 'next/link';
 import { UserLogin } from '@/types/user';
 import { loginUser } from '@/libs/actions/user';
-import {  ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createCookie, navigate } from '@/libs/actions/server';
 
-const onLogin = async (data: UserLogin) => {
+const onLogin = async (data: UserLogin, actions: any) => {
   try {
     const res = await loginUser(data);
     if (res.status == 'error') throw res.msg;
+    toast.success('login success');
+    createCookie("token",res.token)
+    actions.resetForm();
+    navigate("/")
   } catch (error) {
+    toast.error(error as string);
     console.log(error);
   }
 };
 
 export default function Login() {
-
-  const notify = () => toast.success("Login success");
-
   const initialValues: UserLogin = { data: '', password: '' };
-
   return (
     <div className="flex items-center md:justify-around md:bg-black relative justify-center h-screen max-w-screen-2xl">
       <Image
@@ -50,22 +52,20 @@ export default function Login() {
             className="min-h-screen md:hidden"
             alt="dj"
           />
-          <div className="absolute md:bg-black md:flex md:flex-col  lg:justify-center lg:items-center  lg:top-[20%] md:top-0 top-[46%]">
+          <div className="absolute md:bg-black md:flex md:flex-col  lg:justify-center lg:items-center  lg:top-[20%] lg:bottom-[20%] md:top-0 bottom-[1%]">
             <h1 className="text-3xl ml-5 text-white   font-semibold ">
               Hello, <span className="text-[#32bc9b]">friend</span>
             </h1>
             <p className="ml-5 text-sm p-2 pb-5  max-w-[300px] text-white  ">
-              Sign in to access your account
+              Sign in to access your{' '}
+              <span className="text-[#32bc9b]">user</span> account
             </p>
 
             <Formik
               initialValues={initialValues}
               validationSchema={LoginSchema}
               onSubmit={(values, actions) => {
-                onLogin(values);
-
-                // alert('login succes');
-                actions.resetForm();
+                onLogin(values, actions);
               }}
             >
               {(props: FormikProps<UserLogin>) => {
@@ -89,13 +89,12 @@ export default function Login() {
                             placeholder="Password"
                           />
                         </div>
-                        <button onClick={notify}
+                        <button
                           type="submit"
                           className="bg-[#ff784b] lg:border-2 lg:border-[#ff784b] text-black py-2 rounded-full font-semibold  w-full  hover:bg-black hover:text-white  duration-100"
                         >
                           Sign In
                         </button>
-                        <ToastContainer />
                       </div>
                     </Form>
                   </div>
@@ -104,12 +103,16 @@ export default function Login() {
             </Formik>
             <LoginLine />
             <GoogleLogin />
+            
             <p className="ml-5 text-sm p-2 pb-5  max-w-[300px] text-white ">
               Don't have an account ?
               <span className="text-blue-600">
                 <Link href="/register">Register</Link>
               </span>
             </p>
+              <Link href={'/'}>
+                <button className="text-white  top-5 left-12">Back</button>
+              </Link>
           </div>
         </div>
       </div>

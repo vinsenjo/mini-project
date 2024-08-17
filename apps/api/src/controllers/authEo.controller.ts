@@ -1,4 +1,4 @@
-import { createToken } from '@/helpers/createToken';
+import { creatCreatorToken, createToken } from '@/helpers/createToken';
 import { hashPass } from '@/helpers/hashPassword';
 import { responseError } from '@/helpers/responseError';
 import prisma from '@/prisma';
@@ -26,7 +26,29 @@ export class AuthEo {
       });
     } catch (error) {
       responseError(res, error);
-      console.log(error);
+      
+    }
+  }
+  async loginEo(req: Request, res: Response) {
+    try {
+      const creator = await prisma.eO.findFirst({
+        where: {
+          OR: [{ creator: req.body.data }, { email: req.body.data }],
+        },
+      });
+
+      if (!creator) throw 'Creator not found';
+      const isValidPass = await compare(req.body.password, creator.password);
+      if (!isValidPass) throw 'password is incorrect';
+      const token = creatCreatorToken({ id: creator.id, role: 'eo' });
+      res.status(200).send({
+        status: 'OK',
+        msg: 'Login Success',
+        token: token,
+        creator,
+      });
+    } catch (error) {
+      responseError(res, error);
     }
   }
 }

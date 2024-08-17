@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
-export class Middleware {
+export class AuthMiddleware {
   verifyTokenUser(req: Request, res: Response, next: NextFunction) {
     try {
       let token = req.headers.authorization?.replace('Bearer ', '');

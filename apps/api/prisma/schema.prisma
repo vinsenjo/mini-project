@@ -18,7 +18,7 @@ model User {
   avatar       String?
   isVerify     Boolean       @default(false)
   point        Int           @default(0)
-  phoneNumber  String           @unique
+  phoneNumber  String        @unique
   referralCode String        @unique
   referral     String?
   createdAt    DateTime      @default(now())
@@ -62,7 +62,7 @@ model Event {
   seats       Int
   ticketType  TicketType
   createdAt   DateTime      @default(now())
-  // updatedAt   DateTime      @updatedAt
+  updatedAt   DateTime      @updatedAt
   category    Category
   Transaction Transaction[]
   Review      Review[]
@@ -71,17 +71,26 @@ model Event {
   eo          EO            @relation(fields: [eOId], references: [id])
 }
 
+enum Status {
+  pending
+  waiting
+  confirm
+  paid
+  decline
+}
+
 model Transaction {
   id Int @id @default(autoincrement())
 
   user_id       Int
   totalPrice    Float
-  totalDiscount Float
+  totalDiscount Float    @default(0)
   finalPrice    Float
   quantity      Int
   createdAt     DateTime @default(now())
   proof         String
-  // updatedAt     DateTime @updatedAt
+  status        Status   @default(pending)
+  updatedAt     DateTime @updatedAt
   eventId       Int
   userId        Int
   event         Event    @relation(fields: [eventId], references: [id])

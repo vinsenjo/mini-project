@@ -12,7 +12,7 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
 
-    <div className="min-w-full">
+    <div className="min-w-full no-scrollbar">
       <Header/>
       <Hero />
       <Category />

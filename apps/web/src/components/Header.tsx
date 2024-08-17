@@ -1,52 +1,95 @@
-'use client'
-import Link from "next/link";
-import ModalLogin from "./modal/modalLogin";
-import { useState } from "react";
+'use client';
+import Link from 'next/link';
+import ModalLogin from './modal/modalLogin';
+import { useState } from 'react';
+import Image from 'next/image';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import Hamburger from './modal/navbarHamburger';
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [openModalRegister, setOpenModalRegister] = useState(false)
+  const [openModalRegister, setOpenModalRegister] = useState(false);
 
   const handleModal = () => {
-    setOpenModal(!openModal)
-  }
+    setOpenModal(!openModal);
+  };
   const handleModalRegister = () => {
-    setOpenModalRegister(!openModalRegister)
-  }
+    setOpenModalRegister(!openModalRegister);
+  };
 
   return (
-    <section>
-      <nav className=" bg-black sm:px-20 px-3 lg:py-5 py-2 top-1 flex flex-row justify-between items-center  ">
-        <h1 className="text-white text-mono font-extrabold text-3xl hover:scale-125 duration-500"><Link href="/" passHref >X-ev</Link></h1>
-        <div className="flex text-white  lg:gap-10 gap-5 ">
-          <input type="search" placeholder="Search" className="md:w-[500px] w-[100px] h-[30px] focus:outline-none text-black " />
-
-          <div className="text-white flex gap-3">
-            <p className="cursor-pointer" onClick={handleModal}>Login</p>
-            <p className="cursor-pointer" onClick={handleModalRegister}>register</p>
+    <section className='z-30 '>
+      <nav className=" bg-white    sm:px-5 px-3  py-2 top-1 flex flex-row lg:justify-between items-center  ">
+        <Link href="/" passHref>
+          <Image
+            src={'/img/logo-black.png'}
+            height={130}
+            width={130}
+            className="w-[80px] lg:w-[150px]"
+            alt="logo"
+          />
+        </Link>
+        {/* div untuk search & login register */}
+        <div className="text-white  items-center flex gap-2">
+          <input
+            type="search"
+            placeholder="Search . . ."
+            className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none  "
+          />
+          {/* div untuk login register */}
+          <div className={`lg:flex hidden `}>
+            <div className="dropdown dropdown-hover">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn m-1 rounded-full w-32  border-white border-2 hoverbg-black bg-[#FF7B4F] hover:text-white text-black"
+              >
+                Login
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+              >
+                <li>
+                  <Link href={'/login'}>User</Link>
+                </li>
+                <li>
+                  <Link href={'/login-creator'}>EO</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="dropdown dropdown-hover">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn m-1 rounded-full w-32 bg-white text-black hover:border-0 hover:bg-black hover:text-white"
+              >
+                Register
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+              >
+                <li>
+                <Link href={'/register'}>User</Link>
+                </li>
+                <li>
+                <Link href={'/register-creator'}>EO</Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <ModalLogin isOpen={openModal} onClose={handleModal}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/login"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
-
-          <ModalLogin isOpen={openModalRegister} onClose={handleModalRegister}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/register"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
+          <GiHamburgerMenu
+            className="text-black lg:hidden "
+            onClick={handleModal}
+            size={25}
+          />
+          <Hamburger state={openModal} />
         </div>
       </nav>
     </section>
-  )
+  );
 };
+
+// ${openModal ? 'flex' : 'hidden'}
