@@ -13,8 +13,10 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
 
+
     <div className="min-w-full">
       <Header />
+
       <Hero />
       <Category />
       <Acara />

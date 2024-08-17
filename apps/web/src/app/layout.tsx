@@ -6,10 +6,12 @@ import { Footer } from '@/components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Hamburger from '@/components/modal/navbarHamburger';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'X-ev',
+  title: 'Ticketist',
   description: 'Discover events',
 };
 

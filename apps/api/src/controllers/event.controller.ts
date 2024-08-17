@@ -10,7 +10,7 @@ export class EventController {
       });
       const date = new Date(req.body.date);
       const price = parseFloat(req.body.price);
-      // const organizerId = await pri 
+      // const organizerId = await pri
       if (eventName?.name) throw 'event name has been used';
       await prisma.event.create({
         data: {
@@ -25,24 +25,25 @@ export class EventController {
   }
   async getEvent(req: Request, res: Response) {
     try {
-      const event = await prisma.event.findMany()
+      let { q: query, category, page, limmit } = req.query;
+      if (typeof query !== 'string') throw 'Invalid Request';
+      const event = await prisma.event.findMany({
+        orderBy: [{ id: 'desc' }],
+      });
       res.status(200).send({
-        status: "ok",
-        event
-      })
+        status: 'ok',
+        event,
+      });
     } catch (error) {
       res.status(400).send({
-        status: "Failed",
-        msg: error
-      })
+        status: 'Failed',
+        msg: error,
+      });
     }
   }
-  async getEventId(req:Request, res:Response){
+  async getEventId(req: Request, res: Response) {
     try {
       // const event = await prisma.event.findUnique()
-
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 }
