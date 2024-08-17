@@ -17,10 +17,13 @@ import { UserLogin } from '@/types/user';
 import { loginUser } from '@/libs/actions/user';
 import {  ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ok } from 'assert';
+import { result } from 'cypress/types/lodash';
 
 const onLogin = async (data: UserLogin) => {
   try {
     const res = await loginUser(data);
+
     if (res.status == 'error') throw res.msg;
   } catch (error) {
     console.log(error);
@@ -29,7 +32,7 @@ const onLogin = async (data: UserLogin) => {
 
 export default function Login() {
 
-  const notify = () => toast.success("Login success");
+
 
   const initialValues: UserLogin = { data: '', password: '' };
 
@@ -89,13 +92,13 @@ export default function Login() {
                             placeholder="Password"
                           />
                         </div>
-                        <button onClick={notify}
+                        <button 
                           type="submit"
                           className="bg-[#ff784b] lg:border-2 lg:border-[#ff784b] text-black py-2 rounded-full font-semibold  w-full  hover:bg-black hover:text-white  duration-100"
                         >
                           Sign In
                         </button>
-                        <ToastContainer />
+                    
                       </div>
                     </Form>
                   </div>

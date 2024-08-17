@@ -9,16 +9,18 @@ import { Footer } from "@/components/Footer";
 
 
 
+
 export default function Home() {
   return (
 
     <div className="min-w-full">
-      <Header/>
+      <Header />
       <Hero />
       <Category />
-      <Acara/>
-      <Footer/>
-    
+      <Acara />
+      
+      <Footer />
+
 
 
     </div>

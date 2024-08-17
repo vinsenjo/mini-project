@@ -7,23 +7,25 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
-import {  ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 
 export default function Register() {
-
-  const notify = () => {
-    toast("Register sukses")
-  }
 
   const router = useRouter();
   const onRegister = async (data: ISignUp) => {
     try {
       const res = await registerUser(data);
+    
+      console.log(res);
+      
       if (res.status == 'error') throw res.msg;
+      toast.success("Register success")
       router.push('/');
+    
     } catch (error) {
-      // toast.error(error as string)
+      toast.error("register failed")
+
       console.log(error);
     }
   };
@@ -39,55 +41,53 @@ export default function Register() {
       <LargeImage />
       <Formik
         initialValues={initialValues}
-        validationSchema={signUpSchema}
-        onSubmit={(values, actions) => {
-          onRegister(values);
-          actions.resetForm();
-          console.log(values);
-          // router.push('/');
-        }}
+      validationSchema={signUpSchema}
+      onSubmit={(values, actions) => {
+        onRegister(values);
+        actions.resetForm();
+        // router.push('/');
+      }}
       >
-        {(props: FormikProps<ISignUp>) => {
-          return (
-            <div className="flex flex-col mx-3 items-center ">
-              <Form>
-                <div className="flex   flex-col gap-4 lg:gap-5">
-                  <h1 className="text-5xl self-center font-bold ">Sign Up</h1>
-                  <InputRegister
-                    type="text"
-                    name="username"
-                    placeholder="username"
-                  />
-                  <InputRegister type="text" name="email" placeholder="email" />
-                  <InputRegister
-                    type="text"
-                    name="phoneNumber"
-                    placeholder="phone number"
-                  />
-                  <InputRegister
-                    type="password"
-                    name="password"
-                    placeholder="password"
-                  />
-                  <InputRegister
-                    type="text"
-                    name="referral"
-                    placeholder="refferal number"
-                  />
-                  <button onClick={notify}
-                    type="submit"
-                    className=" bg-[#ff784b]  text-black w-[300px] md:min-w-[500px] py-4 rounded-full font-semibold hover:bg-black hover:text-white duration-100"
-                  >
-                    Sign Up
-                  </button>
-                  <ToastContainer />
-                </div>
-              </Form>
-              <HasReg />
-            </div>
-          );
-        }}
-      </Formik>
-    </div>
+      {(props: FormikProps<ISignUp>) => {
+        return (
+          <div className="flex flex-col mx-3 items-center ">
+            <Form>
+              <div className="flex   flex-col gap-4 lg:gap-5">
+                <h1 className="text-5xl self-center font-bold ">Sign Up</h1>
+                <InputRegister
+                  type="text"
+                  name="username"
+                  placeholder="username"
+                />
+                <InputRegister type="text" name="email" placeholder="email" />
+                <InputRegister
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="phone number"
+                />
+                <InputRegister
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                />
+                <InputRegister
+                  type="text"
+                  name="referral"
+                  placeholder="refferal number"
+                />
+                <button
+                  type="submit"
+                  className=" bg-[#ff784b]  text-black w-[300px] md:min-w-[500px] py-4 rounded-full font-semibold hover:bg-black hover:text-white duration-100"
+                >
+                  Sign Up
+                </button>
+              </div>
+            </Form>
+            <HasReg />
+          </div>
+        );
+      }}
+    </Formik>
+    </div >
   );
 }
