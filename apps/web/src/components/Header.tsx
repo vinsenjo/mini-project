@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import ModalLogin from './modal/modalLogin';
@@ -5,6 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Hamburger from './modal/navbarHamburger';
+
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);

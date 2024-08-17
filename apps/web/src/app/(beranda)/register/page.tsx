@@ -7,20 +7,27 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { navigate } from '@/libs/actions/server';
 export default function Register() {
  
   const onRegister = async (data: ISignUp, actions: any) => {
+
     try {
       const res = await registerUser(data);
+    
+      console.log(res);
+      
       if (res.status == 'error') throw res.msg;
+
       toast.success('register success');
       actions.resetForm();
       navigate('/');
     } catch (error) {
       toast.error(error as string);
+
       console.log(error);
     }
   };
@@ -36,6 +43,7 @@ export default function Register() {
       <LargeImage />
       <Formik
         initialValues={initialValues}
+
         validationSchema={signUpSchema}
         onSubmit={(values, actions) => {
           onRegister(values, actions);

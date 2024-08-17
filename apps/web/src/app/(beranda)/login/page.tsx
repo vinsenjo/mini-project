@@ -17,11 +17,16 @@ import { UserLogin } from '@/types/user';
 import { loginUser } from '@/libs/actions/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { ok } from 'assert';
+import { result } from 'cypress/types/lodash';
+
 import { createCookie, navigate } from '@/libs/actions/server';
 
 const onLogin = async (data: UserLogin, actions: any) => {
   try {
     const res = await loginUser(data);
+
     if (res.status == 'error') throw res.msg;
     toast.success('login success');
     createCookie("token",res.token)
@@ -34,6 +39,7 @@ const onLogin = async (data: UserLogin, actions: any) => {
 };
 
 export default function Login() {
+
   const initialValues: UserLogin = { data: '', password: '' };
   return (
     <div className="flex items-center md:justify-around md:bg-black relative justify-center h-screen max-w-screen-2xl">
@@ -89,12 +95,16 @@ export default function Login() {
                             placeholder="Password"
                           />
                         </div>
+
                         <button
+
                           type="submit"
                           className="bg-[#ff784b] lg:border-2 lg:border-[#ff784b] text-black py-2 rounded-full font-semibold  w-full  hover:bg-black hover:text-white  duration-100"
                         >
                           Sign In
                         </button>
+
+
                       </div>
                     </Form>
                   </div>
