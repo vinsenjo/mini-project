@@ -7,7 +7,7 @@ interface InputProps {
   placeholder?: string;
 }
 
-export const Input: React.FC<InputProps> = ({ name, type, placeholder }) => {
+export const InputEo: React.FC<InputProps> = ({ name, type, placeholder }) => {
   return (
     <div>
       <Field 
@@ -15,7 +15,7 @@ export const Input: React.FC<InputProps> = ({ name, type, placeholder }) => {
         placeholder={placeholder}
         name={name}
         autoComplete="off"
-        className="lg:w-[280px] bg-transparent text-white   placeholder:text-white pl-2 pr-10  py-3 border-2 border-white rounded-xl"
+        className="lg:w-[280px] bg-transparent     pl-2 pr-10  py-3 border-2 rounded-xl"
       />
       <ErrorMessage
         name={name}
