@@ -21,10 +21,6 @@ export interface EoLogin {
   data: string;
   password: string;
 }
-export interface CreateTweet {
-  content: string;
-  media?: File | null;
-}
 
 export interface UserState {
   id: number;

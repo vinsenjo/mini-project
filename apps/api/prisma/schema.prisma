@@ -16,6 +16,7 @@ model User {
   email        String        @unique
   password     String
   avatar       String?
+  role         Role          @default(user)
   isVerify     Boolean       @default(false)
   point        Int           @default(0)
   phoneNumber  String        @unique
@@ -27,15 +28,20 @@ model User {
   Review       Review[]
 }
 
+enum Role {
+  eventorganizer
+  user
+}
+
 model EO {
   id        Int      @id @default(autoincrement())
   creator   String   @unique
   email     String   @unique
   password  String
   avatar    String?
+  role      Role     @default(eventorganizer)
   isVerify  Boolean  @default(false)
   createdAt DateTime @default(now())
-  // updatedAt DateTime @updatedAt
   Event     Event[]
 }
 
@@ -54,19 +60,19 @@ enum Category {
 model Event {
   id          Int           @id @default(autoincrement())
   name        String        @unique
-  description String
-  price       Float
+  description String        @default("")
+  price       Float         @default(0)
   date        DateTime
-  location    String
-  image       String
-  seats       Int
+  location    String        @default("")
+  image       String?
+  seats       Int           @default(0)
   ticketType  TicketType
   createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  updatedAt   DateTime      @updatedAt()
   category    Category
   Transaction Transaction[]
   Review      Review[]
-  Promotion   Promotion[]
+  Promotion   Promotion?
   eOId        Int
   eo          EO            @relation(fields: [eOId], references: [id])
 }
@@ -114,6 +120,6 @@ model Promotion {
   voucherCode String
   quota       Int
   percentage  Int
-  eventId     Int
+  eventId     Int      @unique
   event       Event    @relation(fields: [eventId], references: [id])
 }
