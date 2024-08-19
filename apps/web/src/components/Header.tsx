@@ -1,27 +1,33 @@
-
 'use client';
 import Link from 'next/link';
-import ModalLogin from './modal/modalLogin';
 import { useState } from 'react';
 import Image from 'next/image';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Hamburger from './modal/navbarHamburger';
-
+import { deleteCookie, getCookie, navigate } from '@/libs/actions/server';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [openModalRegister, setOpenModalRegister] = useState(false);
 
   const handleModal = () => {
     setOpenModal(!openModal);
   };
-  const handleModalRegister = () => {
-    setOpenModalRegister(!openModalRegister);
+  const cookies = getCookie('token');
+  const logOut = () => {
+    try {
+      if (!cookies) throw 'already logout';
+      deleteCookie('token');
+      toast.success('success logout');
+      navigate('/');
+    } catch (error) {
+      toast.error('error');
+    }
   };
-
   return (
-    <section className='z-30 '>
-      <nav className=" bg-white    sm:px-5 px-3  py-2 top-1 flex flex-col lg:flex-row lg:justify-between items-center  ">
+    <section className="z-30 ">
+      <nav className=" bg-white sm:px-5 px-3  py-2 top-1 flex flex-row lg:justify-between items-center  ">
         <Link href="/" passHref>
           <Image
             src={'/img/logo-black.png'}
@@ -38,8 +44,26 @@ export const Header = () => {
             placeholder="Search . . ."
             className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none  "
           />
+          <div>
+            <div className="dropdown dropdown-hover  dropdown-end">
+              {/* avatar */}
+              <div className="avatar">
+                <div className="w-12 rounded-full">
+                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+              >
+                <li>
+                  <a onClick={logOut}>Log Out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
           {/* div untuk login register */}
-          <div className={`lg:flex hidden `}>
+          <div className={` hidden lg:flex`}>
             <div className="dropdown dropdown-hover">
               <div
                 tabIndex={0}
@@ -73,25 +97,22 @@ export const Header = () => {
                 className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow text-black"
               >
                 <li>
-                <Link href={'/register'}>User</Link>
+                  <Link href={'/register'}>User</Link>
                 </li>
                 <li>
-                <Link href={'/register-creator'}>EO</Link>
+                  <Link href={'/register-creator'}>EO</Link>
                 </li>
               </ul>
             </div>
           </div>
-
-          <GiHamburgerMenu
-            className="text-black lg:hidden "
-            onClick={handleModal}
-            size={25}
-          />
+          <div className="avatar lg:hidden" onClick={handleModal}>
+                <div className="w-12 rounded-full">
+                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
+              </div>
           <Hamburger state={openModal} />
         </div>
       </nav>
     </section>
   );
 };
-
-// ${openModal ? 'flex' : 'hidden'}

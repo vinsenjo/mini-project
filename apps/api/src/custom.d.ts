@@ -7,3 +7,13 @@ declare namespace Express {
     user?: User;
   }
 }
+
+type EO = {
+  id: number;
+};
+
+declare namespace Express {
+  export interface Request {
+    eo?: EO;
+  }
+}
