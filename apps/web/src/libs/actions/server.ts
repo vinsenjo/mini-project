@@ -8,10 +8,16 @@ export const createCookie = (key: string, value: string) => {
   cookies().set(key, value, { expires: Date.now() + oneDay });
 };
 
-export const getCookie = (key:string)=> {
-    return cookies().get(key)
-}
+export const getCookie = (key: string) => {
+  return cookies().get(key);
+};
 
-export const navigate = (url:string)=>{
-    redirect(url)
-}
+
+
+export const deleteCookie = (key: string) => {
+  return cookies().delete(key);
+};
+
+export const navigate = (url: string) => {
+  redirect(url);
+};
