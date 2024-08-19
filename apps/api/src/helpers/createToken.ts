@@ -11,6 +11,6 @@ export const createToken = (payload: IPayload) => {
   return token;
 };
 export const creatCreatorToken = (payload: IPayload) => {
-  const token = sign(payload, process.env.SECRET_KEY!, { expiresIn: '1d' });
+  const token = sign(payload, process.env.SECRET_KEY_ADMIN!, { expiresIn: '1d' });
   return token;
 };
