@@ -24,7 +24,8 @@ export default function Card() {
     
     return (
       
-            <section className="flex lg:flex-row lg:flex-wrap flex-col gap-4 lg:py-6 py-4 lg:mx-5  text-black">
+            <section className="">
+                <div className="flex lg:flex-row lg:flex-wrap flex-col gap-4 lg:p-6 p-4 lg:mx-5  text-black">
                 {data.map((item, key) => (
                     <div key={key} className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
                         <figure>
@@ -39,11 +40,12 @@ export default function Card() {
                             <p className="text-slate-400">{item.tempat}</p>
                             <p className="text-red-700">{`IDR ${item.harga}`}</p>
                             <div className="card-actions flex justify-center pt-3">
-                                <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"><Link href="/detail" passHref >Detail</Link></button>
+                                <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white text-black hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"><Link href="/detail" passHref >Detail</Link></button>
                             </div>
                         </div>
                     </div>
                 ))}
+                </div>
 
             </section>
       

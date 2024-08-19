@@ -21,7 +21,7 @@ export const Header = () => {
 
   return (
     <section className='z-30 '>
-      <nav className=" bg-white    sm:px-5 px-3  py-2 top-1 flex flex-row lg:justify-between items-center  ">
+      <nav className=" bg-white    sm:px-5 px-3  py-2 top-1 flex flex-col lg:flex-row lg:justify-between items-center  ">
         <Link href="/" passHref>
           <Image
             src={'/img/logo-black.png'}
@@ -50,7 +50,7 @@ export const Header = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow text-black"
               >
                 <li>
                   <Link href={'/login'}>User</Link>
@@ -70,7 +70,7 @@ export const Header = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow text-black"
               >
                 <li>
                 <Link href={'/register'}>User</Link>
