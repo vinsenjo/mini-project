@@ -48,6 +48,8 @@ export class AuthEo {
         creator,
       });
     } catch (error) {
+      console.log(error);
+      
       responseError(res, error);
     }
   }

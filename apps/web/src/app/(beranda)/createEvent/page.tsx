@@ -1,11 +1,9 @@
-import CardEO from "@/components/createEO/cardEO";
+import CreateEvent from "@/components/createEvent/createEvent";
 
-
-export default function createEO(){
-    return(
+export default function createEO() {
+    return (
         <section>
-            <CardEO/>
-        
+            <CreateEvent />
         </section>
     )
 }

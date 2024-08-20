@@ -56,6 +56,8 @@ export class EventController {
         event,
       });
     } catch (error) {
+      console.log(error);
+      
       responseError(res, error);
     }
   }

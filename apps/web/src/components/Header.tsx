@@ -7,9 +7,23 @@ import Hamburger from './modal/navbarHamburger';
 import { deleteCookie, getCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import *as yup from "yup"
+import { values } from 'cypress/types/lodash';
+
+interface ISearch {
+  search: string;
+}
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  const initialValue = {
+    search: ""
+  }
+  const validationSchema = yup.object().shape({
+    search: yup.string().required()
+  })
 
   const handleModal = () => {
     setOpenModal(!openModal);
@@ -39,11 +53,24 @@ export const Header = () => {
         </Link>
         {/* div untuk search & login register */}
         <div className="text-white  items-center flex gap-2">
-          <input
-            type="search"
-            placeholder="Search . . ."
-            className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none  "
-          />
+          <Formik
+            initialValues={initialValue}
+            onSubmit={(values, action) => {
+              alert(JSON.stringify(values))
+              action.resetForm()
+            }}
+
+          >
+            <Form>
+              <Field
+                type='text'
+                name='search'
+                placeholder='search...'
+                className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
+              />
+
+            </Form>
+          </Formik>
           <div>
             <div className="dropdown dropdown-hover  dropdown-end">
               {/* avatar */}
@@ -106,10 +133,10 @@ export const Header = () => {
             </div>
           </div>
           <div className="avatar lg:hidden" onClick={handleModal}>
-                <div className="w-12 rounded-full">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                </div>
-              </div>
+            <div className="w-12 rounded-full">
+              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            </div>
+          </div>
           <Hamburger state={openModal} />
         </div>
       </nav>

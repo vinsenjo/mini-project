@@ -2,18 +2,14 @@
 
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Decimal from 'decimal.js';
-import format from "date-fns";
 import ModalFree from "../modal/modalfree";
 import ModalPaid from "../modal/modalpaid";
-// import TypeEO from "./typeEO";
 
 const validationSchema = Yup.object({
     namaevent: Yup.string().required("enter your nama event"),
     date: Yup.date().required("please enter your date event"),
     time: Yup.string().required("please enter time event"),
     location: Yup.string().required("please enter your location"),
-    pince: Yup.number().required("please enter price event"),
     description: Yup.string().required("please description event")
 })
 
@@ -22,7 +18,6 @@ export interface validationSchema {
     date: Date
     time: string
     location: string
-    price: number
     description: string
 }
 
@@ -32,13 +27,12 @@ export default function CardEO() {
         date: new Date(),
         time: "",
         location: "",
-        price: 0,
         description: ""
     }
     return (
         <section className="min-h-screen  flex justify-center items-center bg-[#e1e1e1]">
-            <div className="bg-white rounded-xl mx-auto lg:w-[700px]  h-full overflow-auto flex flex-col p-8 ">
-                
+            <div className="bg-white rounded-xl mx-auto lg:w-[700px]  h-full  flex flex-col p-8 ">
+
                 <Formik
                     initialValues={{ intialValues: "" }}
                     validationSchema={validationSchema}
@@ -64,7 +58,7 @@ export default function CardEO() {
                                 />
                             </div>
                             <div className="flex justify-center gap-16">
-                                <div>
+                                <div className='flex items-center gap-7'>
                                     <p>Date</p>
                                     <Field
                                         type='date'
@@ -79,7 +73,7 @@ export default function CardEO() {
                                         className='text-red-500'
                                     />
                                 </div>
-                                <div>
+                                <div className='flex items-center gap-7'>
                                     <p>Time</p>
                                     <Field
                                         type='time'
@@ -110,20 +104,6 @@ export default function CardEO() {
                                     className='text-red-500'
                                 />
                             </div>
-                            <div className="flex flex-col px-16">
-                                <p>Price</p>
-                                <Field
-                                    type='number'
-                                    name='price'
-                                    placeholder='price'
-                                    className='border-2'
-                                />
-                                <ErrorMessage
-                                    name='price'
-                                    component='div'
-                                    className='text-red-500'
-                                />
-                            </div>
                             <div className="flex flex-col px-16 ">
                                 <p>Description Event</p>
                                 <Field
@@ -140,13 +120,12 @@ export default function CardEO() {
                         </Form>
                     )}
                 </Formik>
-            <div className="flex justify-center gap-16 pt-8">
+                {/* <div className="flex justify-center gap-16 pt-8">
                 <h1 className="flex items-center">Type Event</h1>
                 <ModalPaid/>
                 <ModalFree/>
+            </div> */}
             </div>
-            </div>
-
         </section>
     )
 }

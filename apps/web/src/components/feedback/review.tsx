@@ -12,7 +12,6 @@ const validationSchema = Yup.object({
             /^\S+@\S+\.\S+$/
         )
 })
-
 export interface validationSchema {
     coment: string
     nama: string
