@@ -17,3 +17,13 @@ declare namespace Express {
     eo?: EO;
   }
 }
+
+type Event = {
+  id: number;
+};
+
+declare namespace Express {
+  export interface Request {
+    event?: Event;
+  }
+}

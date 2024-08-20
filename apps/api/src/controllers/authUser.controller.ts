@@ -42,7 +42,6 @@ export class AuthUser {
         data: { ...req.body, password, referralCode },
       });
       const token = createToken({ id: newUser.id, role: 'user' });
-
       const templatePath = path.join(__dirname, '../templates', 'verify.hbs');
       const templateSource = fs.readFileSync(templatePath, 'utf-8');
       const compiledTemplate = handlebars.compile(templateSource);
@@ -68,7 +67,6 @@ export class AuthUser {
       console.log(error);
     }
   }
-
   async loginUser(req: Request, res: Response) {
     try {
       const user = await prisma.user.findFirst({
@@ -83,6 +81,22 @@ export class AuthUser {
       if (!user.isVerify) throw 'User not verify';
 
       const token = createToken({ id: user.id, role: 'user' });
+      if (user.createdAt && user.referral) {
+        const currentDate = new Date();
+        const expirationDate = new Date(user.createdAt);
+        expirationDate.setMonth(expirationDate.getMonth() + 3);
+        if (currentDate > expirationDate) {
+          await prisma.user.update({
+            where: { referralCode: user.referral },
+            data: { point: { decrement: 10000 } },
+          });
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { referral: null },
+          });
+        }
+      }
+
       res.status(200).send({
         status: 'OK',
         msg: 'Login Success',

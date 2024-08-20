@@ -12,8 +12,6 @@ export const getCookie = (key: string) => {
   return cookies().get(key);
 };
 
-
-
 export const deleteCookie = (key: string) => {
   return cookies().delete(key);
 };
