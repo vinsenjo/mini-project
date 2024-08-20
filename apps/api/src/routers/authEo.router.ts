@@ -19,6 +19,11 @@ export class AuthRouterEo {
   private initializeRoutes(): void {
     this.router.post('/register', this.authEo.regEo);
     this.router.post('/login', this.authEo.loginEo);
+    this.router.patch(
+      '/verify',
+      this.verifyMiddleware.verifyTokenEo,
+      this.authEo.verifyEo,
+    );
   }
 
   getRouter(): Router {

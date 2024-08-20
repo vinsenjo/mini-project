@@ -6,8 +6,11 @@ import { Footer } from '@/components/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+<<<<<<< HEAD
 
 import Hamburger from '@/components/modal/navbarHamburger';
+=======
+>>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
 
 const inter = Inter({ subsets: ['latin'] });
 

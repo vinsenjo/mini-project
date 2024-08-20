@@ -2,8 +2,12 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+<<<<<<< HEAD
 
 
+=======
+import Pagination from './pagination';
+>>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
 
 export default function Acara() {
   const [startDate, setStartDate] = useState(new Date());
@@ -31,7 +35,14 @@ export default function Acara() {
           selected={startDate}
           onChange={(date) => setStartDate(date!)}
         />
+<<<<<<< HEAD
       </div>   
+=======
+      </div>
+
+      {/* <Card /> */}
+   
+>>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
     </section>
   );
 }
