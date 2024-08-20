@@ -79,22 +79,18 @@ model Event {
 
 enum Status {
   pending
-  waiting
-  confirm
   paid
-  decline
+  cancel
 }
 
 model Transaction {
   id Int @id @default(autoincrement())
-
-  user_id       Int
-  totalPrice    Float
+  price         Float
   totalDiscount Float    @default(0)
-  finalPrice    Float
-  quantity      Int
+  finalPrice    Float  
+  paymentLink String 
+  quantity      Int 
   createdAt     DateTime @default(now())
-  proof         String
   status        Status   @default(pending)
   updatedAt     DateTime @updatedAt
   eventId       Int
