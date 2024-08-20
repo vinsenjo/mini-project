@@ -1,52 +1,70 @@
-'use client'
-import Link from "next/link";
-import ModalLogin from "./modal/modalLogin";
-import { useState } from "react";
+'use client';
+import Link from 'next/link';
+import { deleteCookie, navigate } from '@/libs/actions/server';
+import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import cookie from 'cookie';
+import { getCookie } from 'cookies-next';
+import 'react-toastify/dist/ReactToastify.css';
+import Hamburger from './navbar/Hamburger';
 
 export const Header = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [openModalRegister, setOpenModalRegister] = useState(false)
-
   const handleModal = () => {
-    setOpenModal(!openModal)
-  }
-  const handleModalRegister = () => {
-    setOpenModalRegister(!openModalRegister)
-  }
+    setOpenModal(!openModal);
+  };
+  const [isAuthenticated, setIsAuthenticated] = useState('');
 
+  useEffect(() => {
+    const authToken = Cookies.get('token');
+    if (authToken) setIsAuthenticated(authToken!);
+  }, []);
+
+  const logOut = () => {
+    try {
+      if (!isAuthenticated) throw 'already logout';
+      deleteCookie('token');
+      setIsAuthenticated('');
+      toast.success('success logout');
+      navigate('/');
+    } catch (error) {
+      toast.error('error');
+    }
+  };
   return (
-    <section>
-      <nav className=" bg-black sm:px-20 px-3 lg:py-5 py-2 top-1 flex flex-row justify-between items-center  ">
-        <h1 className="text-white text-mono font-extrabold text-3xl hover:scale-125 duration-500"><Link href="/" passHref >X-ev</Link></h1>
-        <div className="flex text-white  lg:gap-10 gap-5 ">
-          <input type="search" placeholder="Search" className="md:w-[500px] w-[100px] h-[30px] focus:outline-none text-black " />
-
-          <div className="text-white flex gap-3">
-            <p className="cursor-pointer" onClick={handleModal}>Login</p>
-            <p className="cursor-pointer" onClick={handleModalRegister}>register</p>
+    <section className="z-30 w-full ">
+      <nav className=" bg-white sm:px-5 px-3 lg:justify-between py-2 top-1 flex flex-row  items-center  ">
+        <Link href="/" passHref>
+          <h1 className="text-2xl text-black font-bold">Ticketist</h1>
+        </Link>
+        <div className="text-white  items-center flex gap-2">
+          <input
+            type="search"
+            placeholder="Search . . ."
+            className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none  "
+          />
+          {/* avatar */}
+          <div className={`${isAuthenticated ? 'lg:flex' : 'hidden'} hidden`}>
+            <div className={`dropdown dropdown-hover   dropdown-end`}>
+              <div className={`avatar`}>
+                <div className="w-12 rounded-full">
+                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+              >
+                <li>
+                  <a onClick={logOut}>Log Out</a>
+                </li>
+              </ul>
+            </div>
           </div>
-
-          <ModalLogin isOpen={openModal} onClose={handleModal}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/login"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
-
-          <ModalLogin isOpen={openModalRegister} onClose={handleModalRegister}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/register"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
         </div>
+        {/* <Hamburger /> */}
       </nav>
     </section>
-  )
+  );
 };
