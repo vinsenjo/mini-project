@@ -21,3 +21,16 @@ export const registerEo = async (data: ISignUpEo) => {
   });
   return res.json();
 };
+
+export const verifyEo = async (token: string) => {
+  const res = await fetch('http://localhost:8000/api/eo/verify', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'PATCH',
+  });
+  const response = await res.json();
+
+  return { result: response, ok: res.ok };
+};

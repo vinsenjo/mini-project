@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import  Card  from './card';
 import Pagination from './pagination';
 
 export default function Acara() {
@@ -34,7 +33,7 @@ export default function Acara() {
       </div>
 
       {/* <Card /> */}
-      <Pagination />
+   
     </section>
   );
 }

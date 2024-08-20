@@ -15,7 +15,8 @@ import { AuthEo } from './controllers/authEo.controller';
 import { AuthRouterEo } from './routers/authEo.router';
 import { EventController } from './controllers/event.controller';
 import { EventRouter } from './routers/event.router';
-import path from 'path'
+import path from 'path';
+import { TransactionRouter } from './routers/transaction.router';
 export default class App {
   private app: Express;
 
@@ -55,28 +56,23 @@ export default class App {
     );
   }
 
-  // private routes(): void {
-  //   const sampleRouter = new SampleRouter();
-
-  //   this.app.get('/api', (req: Request, res: Response) => {
-  //     res.send(`Hello, Purwadhika Student API!`);
-  //   });
-
-  //   this.app.use('/api/samples', sampleRouter.getRouter());
-  // }
-
   private routes(): void {
     const userAuth = new AuthRouterUser();
     const eoAuth = new AuthRouterEo();
     const event = new EventRouter();
+    const transaction = new TransactionRouter();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
-    this.app.use('/api/public', express.static(path.join(__dirname, '../public')))
+    this.app.use(
+      '/api/public',
+      express.static(path.join(__dirname, '../public')),
+    );
     this.app.use('/api/user', userAuth.getRouter());
     this.app.use('/api/eo', eoAuth.getRouter());
-    this.app.use('/api/event', event.getRouter())
+    this.app.use('/api/event', event.getRouter());
+    this.app.use('/api/transaction', transaction.getRouter());
   }
 
   public start(): void {

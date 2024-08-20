@@ -19,3 +19,16 @@ export const loginUser = async (data: UserLogin) => {
   });
   return res.json();
 };
+
+export const verifyUser = async (token: string) => {
+  const res = await fetch('http://localhost:8000/api/user/verify', {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+      },
+      method: "PATCH",
+  })
+  const response = await res.json()
+
+  return { result: response, ok: res.ok }
+}
