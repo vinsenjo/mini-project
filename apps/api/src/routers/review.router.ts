@@ -1,26 +1,24 @@
-import { TransactionController } from '@/controllers/transaction.controller';
+import { ReviewController } from '@/controllers/review.controller';
 import { AuthMiddleware } from '@/middleware/auth.middleware';
 import { Router } from 'express';
 
-export class TransactionRouter {
+export class ReviewRouter {
   private router: Router;
   private verifyMiddleware: AuthMiddleware;
-  private transactionController: TransactionController;
+  private reviewController: ReviewController;
 
   constructor() {
-    this.transactionController = new TransactionController();
-    this.verifyMiddleware = new AuthMiddleware();
     this.router = Router();
+    this.verifyMiddleware = new AuthMiddleware();
+    this.reviewController = new ReviewController();
     this.initializeRoutes();
   }
-
   private initializeRoutes(): void {
     this.router.post(
       '/',
       this.verifyMiddleware.verifyTokenUser,
-      this.transactionController.createTransaction,
+      this.reviewController.createReview,
     );
-    this.router.post('/status', this.transactionController.updateStatusTrans);
   }
   getRouter(): Router {
     return this.router;

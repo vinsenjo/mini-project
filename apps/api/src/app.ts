@@ -17,6 +17,7 @@ import { EventController } from './controllers/event.controller';
 import { EventRouter } from './routers/event.router';
 import path from 'path';
 import { TransactionRouter } from './routers/transaction.router';
+import { ReviewRouter } from './routers/review.router';
 export default class App {
   private app: Express;
 
@@ -61,6 +62,7 @@ export default class App {
     const eoAuth = new AuthRouterEo();
     const event = new EventRouter();
     const transaction = new TransactionRouter();
+    const review = new ReviewRouter();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
@@ -73,6 +75,7 @@ export default class App {
     this.app.use('/api/eo', eoAuth.getRouter());
     this.app.use('/api/event', event.getRouter());
     this.app.use('/api/transaction', transaction.getRouter());
+    this.app.use('/api/review', review.getRouter());
   }
 
   public start(): void {
