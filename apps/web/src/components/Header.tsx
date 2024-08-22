@@ -2,36 +2,18 @@
 import Link from 'next/link';
 import { deleteCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
-import cookie from 'cookie';
-import { getCookie } from 'cookies-next';
 import 'react-toastify/dist/ReactToastify.css';
-<<<<<<< HEAD
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import *as yup from "yup"
-import { values } from 'cypress/types/lodash';
-
-interface ISearch {
-  search: string;
-}
-
-export const Header = () => {
-  const [openModal, setOpenModal] = useState(false);
-
-  const initialValue = {
-    search: ""
-  }
-  const validationSchema = yup.object().shape({
-    search: yup.string().required()
-  })
-
-=======
 import Hamburger from './navbar/Hamburger';
+import { event } from 'cypress/types/jquery';
+import { FaSearch } from "react-icons/fa";
+
+
 
 export const Header = () => {
+
   const [openModal, setOpenModal] = useState(false);
->>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
   const handleModal = () => {
     setOpenModal(!openModal);
   };
@@ -52,48 +34,51 @@ export const Header = () => {
     } catch (error) {
       toast.error('error');
     }
-  };
+  }
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (searchRef.current) {
+      event.preventDefault();
+      alert(searchRef.current.value);
+    }
+  }
+
   return (
-    <section className="z-30 w-full ">
+
+    < section className="z-30 w-full " >
       <nav className=" bg-white sm:px-5 px-3 lg:justify-between py-2 top-1 flex flex-row  items-center  ">
         <Link href="/" passHref>
           <h1 className="text-2xl text-black font-bold">Ticketist</h1>
         </Link>
-        <div className="text-white  items-center flex gap-2">
-<<<<<<< HEAD
-          <Formik
-            initialValues={initialValue}
-            onSubmit={(values, action) => {
-              alert(JSON.stringify(values))
-              action.resetForm()
-            }}
-
-          >
-            <Form>
-              <Field
-                type='text'
-                name='search'
-                placeholder='search...'
-                className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
-              />
-
-            </Form>
-          </Formik>
-          <div>
-            <div className="dropdown dropdown-hover  dropdown-end">
-              {/* avatar */}
-              <div className="avatar">
-=======
+        {/* <div className="text-white  items-center flex gap-2"> */}
+        {/* 
           <input
             type="search"
             placeholder="Search . . ."
-            className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none  "
-          />
+            className=" px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none "
+          /> */}
+        <div className="text-white  items-center flex gap-2">
+          <div className='relative'>
+
+            <input
+              placeholder="Search....."
+              className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
+              ref={searchRef}
+            />
+            <button
+              className="absolute end-14 top-3 z-50"
+              onClick={handleSearch}>
+              <FaSearch className="text-black" />
+            </button>
+          </div>
+
+
+
           {/* avatar */}
           <div className={`${isAuthenticated ? 'lg:flex' : 'hidden'} hidden`}>
             <div className={`dropdown dropdown-hover   dropdown-end`}>
               <div className={`avatar`}>
->>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
                 <div className="w-12 rounded-full">
                   <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
                 </div>
@@ -108,61 +93,10 @@ export const Header = () => {
               </ul>
             </div>
           </div>
-<<<<<<< HEAD
-          {/* div untuk login register */}
-          <div className={` hidden lg:flex`}>
-            <div className="dropdown dropdown-hover">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn m-1 rounded-full w-32  border-white border-2 hoverbg-black bg-[#FF7B4F] hover:text-white text-black"
-              >
-                Login
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow text-black"
-              >
-                <li>
-                  <Link href={'/login'}>User</Link>
-                </li>
-                <li>
-                  <Link href={'/login-creator'}>EO</Link>
-                </li>
-              </ul>
-            </div>
-            <div className="dropdown dropdown-hover">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn m-1 rounded-full w-32 bg-white text-black hover:border-0 hover:bg-black hover:text-white"
-              >
-                Register
-              </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow text-black"
-              >
-                <li>
-                  <Link href={'/register'}>User</Link>
-                </li>
-                <li>
-                  <Link href={'/register-creator'}>EO</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="avatar lg:hidden" onClick={handleModal}>
-            <div className="w-12 rounded-full">
-              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-            </div>
-          </div>
-          <Hamburger state={openModal} />
-=======
->>>>>>> dc1c4df41cb7c02bd77a357a09f2326400321a00
         </div>
         {/* <Hamburger /> */}
       </nav>
-    </section>
-  );
+    </section >
+
+  )
 };
