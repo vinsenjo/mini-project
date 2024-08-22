@@ -16,11 +16,11 @@ export default async function Card() {
 
   return (
     <section className="bg-[#e1e1e1] py-2 flex flex-col items-center justify-center ">
-      <div className="grid grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 justify-center items-center bg-[#e1e1e1] lg:flex-row lg:flex-wrap flex-col gap-4 lg:py-6   text-black">
+      <div className="grid w-[90%] grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 justify-center items-center bg-[#e1e1e1] lg:flex-row lg:flex-wrap flex-col gap-4 lg-gap-6 lg:py-6   text-black">
         {data.map((item, key) => (
           <div
             key={key}
-            className="card card-compact  bg-white w-[340px] shadow-xl rounded-2xl"
+            className="card card-compact  bg-white w-[320px] h-[500px] shadow-xl rounded-2xl"
           >
             <figure>
               <img
