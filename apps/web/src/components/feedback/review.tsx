@@ -12,7 +12,6 @@ const validationSchema = Yup.object({
             /^\S+@\S+\.\S+$/
         )
 })
-
 export interface validationSchema {
     coment: string
     nama: string
@@ -36,7 +35,6 @@ export default function Review() {
             >
                 {() => (
                     <Form>
-
                         <p className="flex justify-center pb-3">Do you have any suggestions to improve our product and service?</p>
                         <div className="flex flex-col px-16 ">
                             <Field

@@ -6,6 +6,7 @@ export const getEvent = async () => {
   interface Response {
     status: string;
     event: IEvent[];
+    eventAll: any
   }
   const res = await fetch('http://localhost:8000/api/event/', {
     // headers: {
