@@ -15,6 +15,10 @@ interface IData {
 export default async function Card() {
   const events = await getEvent();
   const data = events.result.event;
+  const total = Math.ceil(events.result.eventAll.length / 8)
+  // console.log(total);
+
+
 
   return (
     <section className="bg-[#e1e1e1] py-2 flex flex-col items-center justify-center ">
@@ -50,7 +54,7 @@ export default async function Card() {
         ))}
         <Pagination
           page="1"
-          totalPages={1}
+          totalPages={total}
           hasPrevPage={false}
           hasNextPage={true}
         />

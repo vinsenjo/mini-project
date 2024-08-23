@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       events: data.event || [],
-      totalPages: data.totalPages || 2,
+      totalPages: data.totalPages || 1,
       currentPage: page,
       hasNextPage: page < data.totalPages,
       hasPrevPage: page > 1,

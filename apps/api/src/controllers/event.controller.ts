@@ -36,7 +36,7 @@ export class EventController {
       });
     } catch (error) {
       console.log(error);
-      
+
       responseError(res, error);
     }
   }
@@ -44,11 +44,13 @@ export class EventController {
     try {
       type ICategory = 'anime' | 'music' | 'game' | 'sport';
       type IFilter = { AND: any[] };
+
       const limit = 8;
       const search = req.query.search || '';
       const category = req.query.category || '';
       const location = req.query.location || '';
-      const page = +req.query || 1;
+      const page = req.query.page;
+      const pages: number = page ? +page : 1
       const filter: IFilter = {
         AND: [{ name: { contains: search as string } }],
       };
@@ -63,12 +65,15 @@ export class EventController {
         orderBy: [{ id: 'desc' }],
         where: filter,
         take: limit,
-        skip: limit * (page - 1),
+        skip: limit * (pages - 1),
       });
+      const eventAll = await prisma.event.findMany({
+
+      })
       res.status(200).send({
         status: 'ok',
-        limit,
         event,
+        eventAll
       });
     } catch (error) {
       console.log(error);

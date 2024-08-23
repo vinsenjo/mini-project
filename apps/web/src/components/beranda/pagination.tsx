@@ -1,9 +1,8 @@
 import { cn } from '@/libs/cn';
 import Link from 'next/link';
 import React from 'react';
-fetch('http://localhost:8000/api/event')
+fetch('http://localhost:8000/api/event/')
   .then(response => response.json())
-  .then(data => console.log(data));
 
 type PaginationProps = {
     page?: string;
