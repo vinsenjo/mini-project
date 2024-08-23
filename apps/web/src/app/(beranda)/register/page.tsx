@@ -12,17 +12,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { navigate } from '@/libs/actions/server';
 export default function Register() {
- 
   const onRegister = async (data: ISignUp, actions: any) => {
-
     try {
       const res = await registerUser(data);
-    
+
       console.log(res);
-      
+
       if (res.status == 'error') throw res.msg;
 
-      toast.success('register success');
+      toast.success(
+        'register success, check your email account for verification',
+      );
       actions.resetForm();
       navigate('/');
     } catch (error) {
@@ -43,7 +43,6 @@ export default function Register() {
       <LargeImage />
       <Formik
         initialValues={initialValues}
-
         validationSchema={signUpSchema}
         onSubmit={(values, actions) => {
           onRegister(values, actions);

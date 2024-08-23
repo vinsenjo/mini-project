@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCookie } from './libs/actions/server';
 
-const protectPages = ['/dashboard'];
+const protectPages = ['/sasa'];
 
-export function middleware(request: NextRequest) {
-  const token = getCookie('token');
+export async function middleware(request: NextRequest) {
+  const token = await getCookie('token');
   const url = request.nextUrl.pathname;
   if (protectPages.includes(url)) {
     if (!token) {
-      return NextResponse.redirect(new URL('/',request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     }
   }
   return NextResponse.next();
