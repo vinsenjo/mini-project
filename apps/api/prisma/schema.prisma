@@ -60,7 +60,7 @@ enum Category {
 model Event {
   id          Int           @id @default(autoincrement())
   name        String        @unique
-  description String        @default("")
+  description String        @db.LongText
   price       Float         @default(0)
   date        DateTime
   location    String        @default("")
@@ -84,12 +84,12 @@ enum Status {
 }
 
 model Transaction {
-  id Int @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   price         Float
   totalDiscount Float    @default(0)
-  finalPrice    Float  
-  paymentLink String 
-  quantity      Int 
+  finalPrice    Float
+  paymentLink   String
+  quantity      Int
   createdAt     DateTime @default(now())
   status        Status   @default(pending)
   updatedAt     DateTime @updatedAt

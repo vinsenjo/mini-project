@@ -11,7 +11,6 @@ export class EventController {
       if (req.file) {
         media = `${base_url}/public/eventImg/${req.file?.filename}`;
         console.log(media);
-        
       }
       const eventName = await prisma.event.findFirst({
         where: { name: req.body.name },
@@ -36,28 +35,43 @@ export class EventController {
         msg: 'event created',
       });
     } catch (error) {
+      console.log(error);
+      
       responseError(res, error);
     }
   }
   async getEvent(req: Request, res: Response) {
     try {
-      let { q: query, category, page, limit } = req.query;
-      if (query) {
-        if (typeof query !== 'string') throw 'Invalid Request';
-        if (typeof category !== 'string') throw 'Invalid request';
-        if (typeof page !== 'string' || isNaN(+page)) page = '1';
-        if (typeof limit !== 'string' || isNaN(+limit)) limit = '8';
+      type ICategory = 'anime' | 'music' | 'game' | 'sport';
+      type IFilter = { AND: any[] };
+      const limit = 8;
+      const search = req.query.search || '';
+      const category = req.query.category || '';
+      const location = req.query.location || '';
+      const page = +req.query || 1;
+      const filter: IFilter = {
+        AND: [{ name: { contains: search as string } }],
+      };
+
+      if (category) {
+        filter.AND.push({ category: category as ICategory });
+      }
+      if (location) {
+        filter.AND.push({ location: location as ICategory });
       }
       const event = await prisma.event.findMany({
         orderBy: [{ id: 'desc' }],
+        where: filter,
+        take: limit,
+        skip: limit * (page - 1),
       });
       res.status(200).send({
         status: 'ok',
+        limit,
         event,
       });
     } catch (error) {
       console.log(error);
-      
       responseError(res, error);
     }
   }

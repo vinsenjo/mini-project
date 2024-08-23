@@ -38,20 +38,51 @@ export class TransactionController {
           },
         },
       );
-      const midtransData = midtrans.data
+      const midtransData = midtrans.data;
 
       await prisma.transaction.update({
-        data:{
-            paymentLink:midtransData?.redirect_url
-        }, where:{
-            id:transaction.id
-        }
-      })
+        data: {
+          paymentLink: midtransData?.redirect_url,
+        },
+        where: {
+          id: transaction.id,
+        },
+      });
       return res.status(201).send({
         status: 'OK',
         msg: ' Transaction created',
         transaction,
         data: midtrans.data,
+      });
+    } catch (error) {
+      responseError(res, error);
+    }
+  }
+  async updateStatusTrans(req: Request, res: Response) {
+    try {
+      const { transaction_status, order_id } = req.body;
+      if (transaction_status == 'settlement') {
+        await prisma.transaction.update({
+          data: { status: 'paid' },
+          where: { id: +order_id },
+        });
+      }
+      if (transaction_status == 'cancel') {
+        await prisma.transaction.update({
+          data: { status: 'cancel' },
+          where: { id: +order_id },
+        });
+      }
+      if (transaction_status == 'expire') {
+        await prisma.transaction.update({
+          data: { status: 'cancel' },
+          where: { id: +order_id },
+        });
+      }
+
+      return res.status(200).send({
+        status: 'OK',
+        msg: 'transaction updated',
       });
     } catch (error) {
       responseError(res, error);
