@@ -36,7 +36,7 @@ export class EventController {
       });
     } catch (error) {
       console.log(error);
-      
+
       responseError(res, error);
     }
   }
@@ -45,14 +45,14 @@ export class EventController {
       type ICategory = 'anime' | 'music' | 'game' | 'sport';
       type IFilter = { AND: any[] };
       const limit = 8;
+      const page = req.query.page;
+      const pages: number = page ? +page : 1;
       const search = req.query.search || '';
       const category = req.query.category || '';
       const location = req.query.location || '';
-      const page = +req.query || 1;
       const filter: IFilter = {
         AND: [{ name: { contains: search as string } }],
       };
-
       if (category) {
         filter.AND.push({ category: category as ICategory });
       }
@@ -62,8 +62,8 @@ export class EventController {
       const event = await prisma.event.findMany({
         orderBy: [{ id: 'desc' }],
         where: filter,
+        skip: limit * (pages - 1),
         take: limit,
-        skip: limit * (page - 1),
       });
       res.status(200).send({
         status: 'ok',
@@ -81,7 +81,10 @@ export class EventController {
       const event = await prisma.event.findUnique({
         where: { id: +id },
       });
-      res.status(200).json(event);
+      res.status(200).send({
+        status: 'OK',
+        data: event,
+      });
     } catch (error) {
       responseError(res, error);
     }

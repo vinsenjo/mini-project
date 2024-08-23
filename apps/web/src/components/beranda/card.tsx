@@ -36,9 +36,7 @@ export default async function Card() {
               <p className="text-red-700">{`IDR ${item.price.toLocaleString()}`}</p>
               <div className="card-actions flex justify-center pt-3">
                 <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full">
-                  <Link href="/detail" >
-                    Detail
-                  </Link>
+                  <Link href={`/detail/${item.id}`}>Detail</Link>
                 </button>
               </div>
             </div>

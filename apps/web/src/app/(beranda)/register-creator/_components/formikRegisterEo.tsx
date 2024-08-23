@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { ISignUpEo } from '@/types/user';
 import { Form, Formik, FormikProps } from 'formik';
 import { InputRegister } from './inputReg_creator';
@@ -12,7 +12,9 @@ export default function FormikRegisterEo() {
     try {
       const res = await registerEo(data);
       if (res.status == 'error') throw res.msg;
-      toast.success('register success');
+      toast.success(
+        'register success, check your email account for verification',
+      );
       actions.resetForm();
 
       navigate('/');
