@@ -3,27 +3,31 @@ import { IoGameController } from 'react-icons/io5';
 import { FaFilm } from 'react-icons/fa';
 import { MdOutlineSportsBasketball } from 'react-icons/md';
 
+interface ICategory {
+  icon: any;
+  judul: string;
+}
+
 export default function Category() {
+  const data: ICategory[] = [
+    { icon: <FaMusic />, judul: 'music' },
+    { icon: <IoGameController />, judul: 'Game' },
+    { icon: <FaFilm />, judul: 'Anime' },
+    { icon: <MdOutlineSportsBasketball />, judul: 'Sport' },
+  ]
   return (
-    <section className="bg-white">
-      <div className="py-9  flex flex-wrap justify-center lg:flex-row gap-10 lg:justify-around  lg:mx-20 text-black font-semibold font-serif  ">
-        <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px]  hover:scale-110  text-black duration-500 hover:bg-white lg:scale-110 lg:text-xl lg:hover:scale-125">
-          <FaMusic size={17} className="text-[#32BC9B]  lg:size-5 " />
-          <p className="">Music</p>
-        </button>
-        <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110  text-black duration-500 hover:bg-white lg:scale-110 lg:text-xl lg:hover:scale-125">
-          <IoGameController size={17} className="text-[#32BC9B] lg:size-5  " />
-          Game
-        </button>
-        <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110  text-black duration-500 hover:bg-white lg:scale-110 lg:text-xl lg:hover:scale-125">
-          <FaFilm size={17} className="text-[#32BC9B] lg:size-5  " />
-          Anime
-        </button>
-        <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110  text-black duration-500 hover:bg-white lg:scale-110 lg:text-xl lg:hover:scale-125">
-          <MdOutlineSportsBasketball size={17} className="text-[#32BC9B] lg:size-5" />
-          Sport
-        </button>
+    <section className="bg-white p-10">
+      <div className='grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+        {data.map((item, key) => (
+          <div key={key} className='flex justify-center'>
+            <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] text-black">
+              <p>{item.icon}</p>
+              <p>{item.judul}</p>
+            </button>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
+

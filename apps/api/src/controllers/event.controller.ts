@@ -44,12 +44,14 @@ export class EventController {
     try {
       type ICategory = 'anime' | 'music' | 'game' | 'sport';
       type IFilter = { AND: any[] };
+
       const limit = 8;
       const page = req.query.page;
       const pages: number = page ? +page : 1;
       const search = req.query.search || '';
       const category = req.query.category || '';
       const location = req.query.location || '';
+
       const filter: IFilter = {
         AND: [{ name: { contains: search as string } }],
       };
@@ -64,14 +66,19 @@ export class EventController {
         where: filter,
         skip: limit * (pages - 1),
         take: limit,
+
+        skip: limit * (pages - 1),
       });
+      const eventAll = await prisma.event.findMany({
+
+      })
       res.status(200).send({
         status: 'ok',
         event,
+        eventAll
       });
     } catch (error) {
       console.log(error);
-
       responseError(res, error);
     }
   }
