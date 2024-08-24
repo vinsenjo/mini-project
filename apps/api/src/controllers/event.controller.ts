@@ -3,6 +3,7 @@ import prisma from '@/prisma';
 import { Request, Response } from 'express';
 
 const base_url = process.env.BASE_URL || 'http://localhost:8000/api';
+const PAGE_SIZE = 3;
 
 export class EventController {
   async createEvent(req: Request, res: Response) {
@@ -61,22 +62,21 @@ export class EventController {
       if (location) {
         filter.AND.push({ location: location as ICategory });
       }
+
       const event = await prisma.event.findMany({
         orderBy: [{ id: 'desc' }],
         where: filter,
-        skip: limit * (pages - 1),
-        take: limit,
-
-        skip: limit * (pages - 1),
+        skip: limit * (pages - 1) ,
+        take: limit * (PAGE_SIZE),
       });
       const eventAll = await prisma.event.findMany({
-
       })
       res.status(200).send({
         status: 'ok',
         event,
         eventAll
       });
+     
     } catch (error) {
       console.log(error);
       responseError(res, error);
