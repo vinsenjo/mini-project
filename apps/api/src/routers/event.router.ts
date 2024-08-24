@@ -22,7 +22,7 @@
 //     );
 //     this.router.get('/', this.eventController.getEvent);
 //     this.router.get('/:id', this.eventController.getEventById);
-    
+
 //   }
 //   getRouter(): Router {
 //     return this.router;
@@ -50,20 +50,26 @@ export class EventRouter {
     // Route to create a new event with authentication and file upload
     this.router.post(
       '/',
-      this.verifyMiddleware.verifyTokenEo,
-      uploader("event", "/eventImg").single("media"),
+      this.verifyMiddleware.verifyTokenUser,
+      uploader('event', '/eventImg').single('media'),
       this.eventController.createEvent,
     );
 
     // Route to get a list of events
     this.router.get('/', this.eventController.getEvent);
 
+    //get event by event organizer
+    this.router.get(
+      '/eo',
+      this.verifyMiddleware.verifyTokenUser,
+      this.eventController.getEventByEo,
+    );
     // Route to get a specific event by ID
     this.router.get('/:id', this.eventController.getEventById);
+
   }
 
   public getRouter(): Router {
     return this.router;
   }
 }
-

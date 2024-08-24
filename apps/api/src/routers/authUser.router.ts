@@ -28,6 +28,11 @@ export class AuthRouterUser {
       this.verifyMiddleware.verifyTokenUser,
       this.authUser.verifyUser,
     );
+    this.router.get(
+      '/',
+      this.verifyMiddleware.verifyTokenUser,
+      this.authUser.DecodeToken,
+    );
   }
 
   getRouter(): Router {

@@ -6,7 +6,8 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import { InputEo } from './input_login_eo';
 import { loginCreator } from '@/libs/actions/eo';
-import {  useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { createCookie } from '@/libs/actions/server';
 
 export default function FormikLoginEo() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function FormikLoginEo() {
       const res = await loginCreator(data);
       if (res.status == 'error') throw res.msg;
       toast.success('login success');
+      createCookie('token', res.token);
       actions.resetForm();
       router.push('/');
     } catch (error) {
