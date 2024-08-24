@@ -10,7 +10,7 @@ export class EventController {
       let media = null;
       if (req.file) {
         media = `${base_url}/public/eventImg/${req.file?.filename}`;
-        console.log(media);
+        // console.log(media);
       }
       const eventName = await prisma.event.findFirst({
         where: { name: req.body.name },
@@ -26,7 +26,7 @@ export class EventController {
           seats,
           date,
           price,
-          eOId: req.eo?.id!,
+          eOId: req.user?.id!,
           image: media,
         },
       });
@@ -66,16 +66,12 @@ export class EventController {
         where: filter,
         skip: limit * (pages - 1),
         take: limit,
-
-        skip: limit * (pages - 1),
       });
-      const eventAll = await prisma.event.findMany({
-
-      })
+      const eventAll = await prisma.event.findMany({});
       res.status(200).send({
         status: 'ok',
         event,
-        eventAll
+        eventAll,
       });
     } catch (error) {
       console.log(error);
@@ -91,6 +87,19 @@ export class EventController {
       res.status(200).send({
         status: 'OK',
         data: event,
+      });
+    } catch (error) {
+      responseError(res, error);
+    }
+  }
+  async getEventByEo(req: Request, res: Response) {
+    try {
+      const data = await prisma.event.findMany({
+        where: { eOId: req.user?.id },
+      });
+      res.status(200).send({
+        status: 'OK',
+        data,
       });
     } catch (error) {
       responseError(res, error);

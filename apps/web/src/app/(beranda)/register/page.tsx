@@ -7,7 +7,6 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { navigate } from '@/libs/actions/server';
@@ -16,7 +15,7 @@ export default function Register() {
     try {
       const res = await registerUser(data);
 
-      console.log(res);
+      // console.log(res);
 
       if (res.status == 'error') throw res.msg;
 

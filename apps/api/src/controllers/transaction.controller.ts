@@ -2,12 +2,23 @@ import { responseError } from '@/helpers/responseError';
 import prisma from '@/prisma';
 import axios from 'axios';
 import { Request, Response } from 'express';
+import { log } from 'handlebars';
 
 export class TransactionController {
   async createTransaction(req: Request, res: Response) {
     try {
-      const { price, quantity, totalDiscount, eventId, finalPrice } = req.body;
-
+      const { price, quantity, totalDiscount, eventId } = req.body;
+      const user = await prisma.user.findFirst({
+        where: { id: req.user?.id },
+      });
+      let finalPrice = req.body.finalPrice;
+      const point = user?.point;
+      const usePoint = req.body.usePoint || 0;
+      if (usePoint % 10000 !== 0) throw 'point harus kelipatan 10000';
+      if (point) {
+        if (usePoint > point) throw 'point kurang';
+        finalPrice -= usePoint;
+      }
       await prisma.$transaction(async (tx) => {
         const transaction = await tx.transaction.create({
           data: {
@@ -20,10 +31,9 @@ export class TransactionController {
             eventId,
           },
         });
-        
         await tx.event.update({
           data: { seats: { decrement: quantity } },
-          where: {id:eventId},
+          where: { id: eventId },
         });
         const data = {
           transaction_details: {
@@ -55,6 +65,7 @@ export class TransactionController {
             id: transaction.id,
           },
         });
+
         return res.status(201).send({
           status: 'OK',
           msg: ' Transaction created',
@@ -69,6 +80,8 @@ export class TransactionController {
   async updateStatusTrans(req: Request, res: Response) {
     try {
       const { transaction_status, order_id } = req.body;
+      // console.log(req.body);
+
       if (transaction_status == 'settlement') {
         await prisma.transaction.update({
           data: { status: 'paid' },
@@ -79,6 +92,13 @@ export class TransactionController {
         await prisma.transaction.update({
           data: { status: 'cancel' },
           where: { id: +order_id },
+        });
+        const data = await prisma.transaction.findFirst({
+          where: { id: +order_id },
+        });
+        await prisma.event.update({
+          data: { seats: { increment: data?.quantity } },
+          where: { id: req.body.eventId },
         });
       }
       if (transaction_status == 'expire') {
