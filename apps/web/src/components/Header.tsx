@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Hamburger from './navbar/Hamburger';
 import { event } from 'cypress/types/jquery';
 import { FaSearch } from "react-icons/fa";
-import { object } from 'yup';
+
 
 
 export const Header = () => {
