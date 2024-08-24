@@ -1,4 +1,4 @@
-import { creatCreatorToken, createToken } from '@/helpers/createToken';
+import {  createToken } from '@/helpers/createToken';
 import { hashPass } from '@/helpers/hashPassword';
 import { responseError } from '@/helpers/responseError';
 import prisma from '@/prisma';
@@ -23,7 +23,7 @@ export class AuthEo {
       const newEo = await prisma.eO.create({
         data: { ...req.body, password },
       });
-      const token = creatCreatorToken({ id: newEo.id, role: 'eo' });
+      const token = createToken({ id: newEo.id, role: 'eo' });
       const templatePath = path.join(__dirname, '../templates', 'verify.hbs');
       const templateSource = fs.readFileSync(templatePath, 'utf-8');
       const compiledTemplate = handlebars.compile(templateSource);
@@ -47,7 +47,6 @@ export class AuthEo {
       responseError(res, error);
     }
   }
-
   async loginEo(req: Request, res: Response) {
     try {
       const creator = await prisma.eO.findFirst({
@@ -55,13 +54,11 @@ export class AuthEo {
           OR: [{ creator: req.body.data }, { email: req.body.data }],
         },
       });
-
       if (!creator) throw 'Creator not found';
       const isValidPass = await compare(req.body.password, creator.password);
       if (!isValidPass) throw 'password is incorrect';
       if (!creator.isVerify) throw 'Event Creator not verify';
-
-      const token = creatCreatorToken({ id: creator.id, role: 'eo' });
+      const token = createToken({ id: creator.id, role: 'eo' });
       res.status(200).send({
         status: 'OK',
         msg: 'Login Success',
@@ -70,18 +67,17 @@ export class AuthEo {
       });
     } catch (error) {
       console.log(error);
-      
       responseError(res, error);
     }
   }
   async verifyEo(req: Request, res: Response) {
     try {
       const eo = await prisma.eO.findUnique({
-        where: { id: req.eo?.id },
+        where: { id: req.user?.id },
       });
       if (eo?.isVerify) throw 'Event Creator has already been Verified!';
       await prisma.eO.update({
-        where: { id: req.eo?.id },
+        where: { id: req.user?.id },
         data: { isVerify: true },
       });
       res.status(200).send({

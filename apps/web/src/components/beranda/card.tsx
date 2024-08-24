@@ -9,11 +9,12 @@ interface IData {
   tempat: string;
   harga: number;
 }
-
 export default async function Card() {
   const events = await getEvent();
   const data = events.result.event;
-  const total = Math.ceil(events.result.eventAll.length / 8)
+
+  const total = Math.ceil(+events.result.eventAll.length / 8)
+  // console.log(total);
 
   return (
     <section className="bg-[#e1e1e1] py-2 flex flex-col items-center justify-center ">
@@ -22,7 +23,7 @@ export default async function Card() {
           <div
             key={key}
 
-            // className="card card-compact  bg-white w-[350px] shadow-xl rounded-2xl"
+
           className="card card-compact  bg-white w-full h-[500px] shadow-xl rounded-2xl"
           >
             <figure>

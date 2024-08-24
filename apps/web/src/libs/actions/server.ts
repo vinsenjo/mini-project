@@ -19,3 +19,13 @@ export const deleteCookie = (key: string) => {
 export const navigate = (url: string) => {
   redirect(url);
 };
+
+export const getData = async (token: string) => {
+  const res = await fetch('http://localhost:8000/api/user', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.json();
+};

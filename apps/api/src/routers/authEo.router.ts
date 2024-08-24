@@ -21,7 +21,7 @@ export class AuthRouterEo {
     this.router.post('/login', this.authEo.loginEo);
     this.router.patch(
       '/verify',
-      this.verifyMiddleware.verifyTokenEo,
+      this.verifyMiddleware.verifyTokenUser,
       this.authEo.verifyEo,
     );
   }

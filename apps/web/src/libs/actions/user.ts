@@ -1,4 +1,4 @@
-import { ISignUp, UserLogin, UserState } from '@/types/user';
+import { EoLogin, ISignUp, UserLogin, UserState } from '@/types/user';
 export const registerUser = async (data: ISignUp) => {
   const res = await fetch('http://localhost:8000/api/user/register', {
     headers: {
@@ -9,7 +9,7 @@ export const registerUser = async (data: ISignUp) => {
   });
   return res.json();
 };
-export const loginUser = async (data: UserLogin) => {
+export const loginUser = async (data: EoLogin) => {
   const res = await fetch('http://localhost:8000/api/user/login', {
     headers: {
       'Content-Type': 'application/json',
@@ -22,13 +22,13 @@ export const loginUser = async (data: UserLogin) => {
 
 export const verifyUser = async (token: string) => {
   const res = await fetch('http://localhost:8000/api/user/verify', {
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-      },
-      method: "PATCH",
-  })
-  const response = await res.json()
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'PATCH',
+  });
+  const response = await res.json();
 
-  return { result: response, ok: res.ok }
-}
+  return { result: response, ok: res.ok };
+};

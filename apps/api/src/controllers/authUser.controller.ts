@@ -79,7 +79,6 @@ export class AuthUser {
       const isValidPass = await compare(req.body.password, user.password);
       if (!isValidPass) throw 'password is incorrect';
       if (!user.isVerify) throw 'User not verify';
-
       const token = createToken({ id: user.id, role: 'user' });
       if (user.createdAt && user.referral) {
         const currentDate = new Date();
@@ -127,6 +126,16 @@ export class AuthUser {
       res.status(200).send({
         status: 'ok',
         msg: 'User Verified!',
+      });
+    } catch (error) {
+      responseError(res, error);
+    }
+  }
+
+  async DecodeToken(req: Request, res: Response) {
+    try {
+      res.status(200).send({
+        user: req.user,
       });
     } catch (error) {
       responseError(res, error);

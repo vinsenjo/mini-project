@@ -1,10 +1,14 @@
-import { deleteCookie, getCookie, navigate } from '@/libs/actions/server';
+import {
+  deleteCookie,
+  getCookie,
+  getData,
+  navigate,
+} from '@/libs/actions/server';
 import Link from 'next/link';
-import Hamburger from './Hamburger';
-import { toast } from 'react-toastify';
 
 export default async function ProfilePict() {
   const cookies = await getCookie('token');
+  const data = await getData(cookies?.value!);
 
   return (
     <div className="bg-white w-max  hidden lg:flex justify-end">
@@ -19,7 +23,7 @@ export default async function ProfilePict() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+            className="dropdown-content menu bg-black text-white rounded-box z-[1] w-32 p-2 shadow"
           >
             <li>
               <Link href={'/login'}>User</Link>
@@ -39,7 +43,7 @@ export default async function ProfilePict() {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-32 p-2 shadow"
+            className="dropdown-content menu bg-black text-white rounded-box z-[1] w-32 p-2 shadow"
           >
             <li>
               <Link href={'/register'}>User</Link>
