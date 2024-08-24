@@ -10,10 +10,20 @@ import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
 import { event } from 'cypress/types/jquery';
 import { FaSearch } from "react-icons/fa";
-
-
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
+import { props } from 'cypress/types/bluebird';
+
+
+const validationSchemas = Yup.object({
+  search: Yup.string().required()
+})
+
+export interface validationSchema {
+  search: string
+}
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
@@ -55,28 +65,9 @@ export const Header = () => {
   };
   const searchRef = useRef<HTMLInputElement>(null);
 
-
-  // const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   if (searchRef.current) {
-  //     event.preventDefault();
-  //     alert(searchRef.current.value);
-  //   }
-  // }
-  const handleSearch =async (event: any, setFieldValue: any) => {
-    const search = event.target.files[0]
-    if (searchRef) {
-        setFieldValue('searchRef', search)
-    }
-}
-  const formEl = document.querySelector('.form');
-  formEl?.addEventListener('submit', event => {
-    event.preventDefault()
-
-    const formData = new FormData();
-    const data = Object.fromEntries(formData);
-    console.log(data);
-
-  })
+  const initialValues: validationSchema = {
+    search: ''
+  }
 
 
   return (
@@ -88,22 +79,39 @@ export const Header = () => {
 
         {/* search */}
         <div className="text-white  items-center flex gap-2">
-          <div className='relative'>
-            <form className='form'>
-              <input
-                placeholder="Search....."
-                className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
-                ref={searchRef}
-              />
-              <button
-                className="absolute end-14 top-3 z-50"
-                >
-                <FaSearch className="text-black" />
-              </button>
-            </form>
+          <Formik
+            initialValues={initialValues}
+            // validationSchema={validationSchema}
+            onSubmit={(values, actions) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null))
+                console.log(values);
+                
+                actions.setSubmitting(false)
+              
+                
+              },)
+            }}
+          >
+            {props => (
+              <div className="text-white  items-center flex gap-2">
 
-
-          </div>
+              <form onSubmit={props.handleSubmit}>
+                <input
+                  type="search"
+                  placeholder="Search....."
+                  className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none items-center"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.search}
+                  name="search"
+                />
+                {props.errors.search && <div id="feedback">{props.errors.search}</div>}
+                <button type="submit">Submit</button>
+              </form>
+              </div>
+            )}
+          </Formik>
 
           {/* avatar */}
           <UserAvatar token={isAuthenticated} role={role} logOut={logOut} />
@@ -112,6 +120,6 @@ export const Header = () => {
         </div>
         {/* <Hamburger auth={isAuthenticated} /> */}
       </nav>
-    </section>
+    </section >
   );
 };
