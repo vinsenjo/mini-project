@@ -1,3 +1,4 @@
+
 'use client';
 import Link from 'next/link';
 import { deleteCookie, getData, navigate } from '@/libs/actions/server';
@@ -5,17 +6,20 @@ import { toast } from 'react-toastify';
 import React, { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
+import { event } from 'cypress/types/jquery';
+import { FaSearch } from "react-icons/fa";
+import { object } from 'yup';
 
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
+
   const [auth, setAuth] = useState('');
+
   useEffect(() => {
     const authToken = Cookies.get('token');
     if (authToken) setIsAuthenticated(authToken!);
@@ -50,12 +54,31 @@ export const Header = () => {
     }
   };
   const searchRef = useRef<HTMLInputElement>(null);
-  const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (searchRef.current) {
-      event.preventDefault();
-      alert(searchRef.current.value);
+
+
+  // const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (searchRef.current) {
+  //     event.preventDefault();
+  //     alert(searchRef.current.value);
+  //   }
+  // }
+  const handleSearch =async (event: any, setFieldValue: any) => {
+    const search = event.target.files[0]
+    if (searchRef) {
+        setFieldValue('searchRef', search)
     }
-  };
+}
+  const formEl = document.querySelector('.form');
+  formEl?.addEventListener('submit', event => {
+    event.preventDefault()
+
+    const formData = new FormData();
+    const data = Object.fromEntries(formData);
+    console.log(data);
+
+  })
+
+
   return (
     <section className="z-30 w-full ">
       <nav className=" bg-white sm:px-5 px-3 justify-between py-2 top-1 flex flex-row  items-center  ">
@@ -63,19 +86,23 @@ export const Header = () => {
           <h1 className="text-lg lg:text-2xl text-black font-bold">Ticketist</h1>
         </Link>
 
+        {/* search */}
         <div className="text-white  items-center flex gap-2">
-          <div className="relative">
-            <input
-              placeholder="Search....."
-              className="px-3 rounded-full md:w-[600px] w-[200px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
-              ref={searchRef}
-            />
-            <button
-              className="absolute end-14 top-3 z-50"
-              onClick={handleSearch}
-            >
-              <FaSearch className="text-black" />
-            </button>
+          <div className='relative'>
+            <form className='form'>
+              <input
+                placeholder="Search....."
+                className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
+                ref={searchRef}
+              />
+              <button
+                className="absolute end-14 top-3 z-50"
+                >
+                <FaSearch className="text-black" />
+              </button>
+            </form>
+
+
           </div>
 
           {/* avatar */}

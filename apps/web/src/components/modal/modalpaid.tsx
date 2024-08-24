@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ImagePreview from "../createEvent/imgPriview";
 import { useRef } from "react";
+import Category from '../beranda/category';
 
 const validationSchemas = Yup.object({
     image: Yup.mixed().required("please enter your img"),
@@ -10,6 +11,7 @@ const validationSchemas = Yup.object({
     date: Yup.date().required("please enter your date event"),
     time: Yup.string().required("please enter time event"),
     seat: Yup.number().required("please enter seat"),
+    Category: Yup.string().required("please enter category your event"),
     select: Yup.string().required("please enter your category"),
     location: Yup.string().required("please enter your location"),
     price: Yup.number().required("please enter price your event"),
@@ -22,6 +24,7 @@ export interface validationSchema {
     date: Date
     time: string
     seat: Number
+    category: string
     select: string
     location: string
     price: Number
@@ -42,7 +45,8 @@ export default function ModalPaid() {
         nameEvent: "",
         date: new Date(),
         time: "",
-        seat:0,
+        seat: 0,
+        category: "",
         select: "",
         location: "",
         price: 0,
@@ -121,13 +125,28 @@ export default function ModalPaid() {
                                     <p className="font-semibold">Seat </p>
                                     <Field
                                         type='number'
-                                        name='number'
+                                        name='seat'
                                         placeholder='seat event'
                                         className='border-2'
                                     />
                                 </div>
                                 <ErrorMessage
-                                    name='number'
+                                    name='seat'
+                                    component='div'
+                                    className='text-red-500'
+                                />
+                                <div className='flex justify-betwen gap-24 pt-6'>
+                                    <p className="font-semibold">Category</p>
+                                    <Field
+                                        type='select'
+                                        name='category'
+                                        placeholder='category'
+                                        className='border-2'
+
+                                    />
+                                </div>
+                                <ErrorMessage
+                                    name='category'
                                     component='div'
                                     className='text-red-500'
                                 />
@@ -172,7 +191,7 @@ export default function ModalPaid() {
                                     <Field
                                         as="textarea"
                                         type='textarea'
-                                        name='coment'
+                                        name='description'
                                         className='border-2'
                                     />
 
