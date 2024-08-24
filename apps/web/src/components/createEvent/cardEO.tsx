@@ -4,6 +4,8 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ModalFree from "../modal/modalfree";
 import ModalPaid from "../modal/modalpaid";
+import { ReferrerEnum } from 'next/dist/lib/metadata/types/metadata-types';
+import Category from '../beranda/category';
 
 const validationSchema = Yup.object({
     namaevent: Yup.string().required("enter your nama event"),
@@ -31,7 +33,7 @@ export default function CardEO() {
     }
     return (
         <section className="min-h-screen  flex justify-center items-center bg-[#e1e1e1]">
-            <div className="bg-white rounded-xl mx-auto lg:w-[700px]  h-full  flex flex-col p-8 ">
+            <div className="bg-white rounded-xl mx-auto lg:w-[700px] w-full  h-full  flex flex-col p-8 ">
 
                 <Formik
                     initialValues={{ intialValues: "" }}
@@ -120,11 +122,6 @@ export default function CardEO() {
                         </Form>
                     )}
                 </Formik>
-                {/* <div className="flex justify-center gap-16 pt-8">
-                <h1 className="flex items-center">Type Event</h1>
-                <ModalPaid/>
-                <ModalFree/>
-            </div> */}
             </div>
         </section>
     )
