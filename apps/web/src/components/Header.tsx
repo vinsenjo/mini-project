@@ -3,31 +3,18 @@
 import Link from 'next/link';
 import { deleteCookie, getData, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
-import { event } from 'cypress/types/jquery';
-import { FaSearch } from "react-icons/fa";
-import { Formik, Field, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
-import { props } from 'cypress/types/bluebird';
-
-
-const validationSchemas = Yup.object({
-  search: Yup.string().required()
-})
-
-export interface validationSchema {
-  search: string
-}
+import Search from './navbar/search';
+import Searchbar from './navbar/search';
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
-
   const [auth, setAuth] = useState('');
 
   useEffect(() => {
@@ -63,12 +50,6 @@ export const Header = () => {
       toast.error('error');
     }
   };
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  const initialValues: validationSchema = {
-    search: ''
-  }
-
 
   return (
     <section className="z-30 w-full ">
@@ -79,39 +60,7 @@ export const Header = () => {
 
         {/* search */}
         <div className="text-white  items-center flex gap-2">
-          <Formik
-            initialValues={initialValues}
-            // validationSchema={validationSchema}
-            onSubmit={(values, actions) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null))
-                console.log(values);
-                
-                actions.setSubmitting(false)
-              
-                
-              },)
-            }}
-          >
-            {props => (
-              <div className="text-white  items-center flex gap-2">
-
-              <form onSubmit={props.handleSubmit}>
-                <input
-                  type="search"
-                  placeholder="Search....."
-                  className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none items-center"
-                  onChange={props.handleChange}
-                  onBlur={props.handleBlur}
-                  value={props.values.search}
-                  name="search"
-                />
-                {props.errors.search && <div id="feedback">{props.errors.search}</div>}
-                <button type="submit">Submit</button>
-              </form>
-              </div>
-            )}
-          </Formik>
+          <Searchbar />
 
           {/* avatar */}
           <UserAvatar token={isAuthenticated} role={role} logOut={logOut} />

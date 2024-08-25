@@ -62,11 +62,11 @@ export class EventController {
       if (location) {
         filter.AND.push({ location: location as ICategory });
       }
+      
 
       const event = await prisma.event.findMany({
         orderBy: [{ id: 'desc' }],
         where: filter,
-
         skip: limit * (pages - 1),
         take: limit,
       });
@@ -75,7 +75,8 @@ export class EventController {
       res.status(200).send({
         status: 'ok',
         event,
-        eventAll,
+        eventAll
+       
       });
      
     } catch (error) {
