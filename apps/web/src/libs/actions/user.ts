@@ -1,4 +1,6 @@
 import { EoLogin, ISignUp, UserLogin, UserState } from '@/types/user';
+import { getCookie } from './server';
+
 export const registerUser = async (data: ISignUp) => {
   const res = await fetch('http://localhost:8000/api/user/register', {
     headers: {
@@ -30,5 +32,20 @@ export const verifyUser = async (token: string) => {
   });
   const response = await res.json();
 
+  return { result: response, ok: res.ok };
+};
+export const getUser = async () => {
+  const token = await getCookie('token');
+
+  
+  const res = await fetch('http://localhost:8000/api/user/profile', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token?.value}`,
+      cache: 'no-chache',
+    },
+    method: 'GET',
+  });
+  const response = await res.json();
   return { result: response, ok: res.ok };
 };

@@ -12,12 +12,19 @@ export class TransactionController {
         where: { id: req.user?.id },
       });
       let finalPrice = req.body.finalPrice;
-      const point = user?.point;
+      const point = user?.point || 0;
       const usePoint = req.body.usePoint || 0;
       if (usePoint % 10000 !== 0) throw 'point harus kelipatan 10000';
-      if (point) {
+      if (usePoint) {
         if (usePoint > point) throw 'point kurang';
         finalPrice -= usePoint;
+        await prisma.user.update({
+          data: { point: { decrement: usePoint } },
+          where: { id: user?.id },
+        });
+      }
+      if (user?.referral) {
+        finalPrice = finalPrice - finalPrice * 0.1;
       }
       await prisma.$transaction(async (tx) => {
         const transaction = await tx.transaction.create({

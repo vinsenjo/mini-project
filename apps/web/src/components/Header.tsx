@@ -17,7 +17,6 @@ import LoginRegister from './navbar/LoginRegister';
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
-
   const [auth, setAuth] = useState('');
 
   useEffect(() => {
@@ -62,21 +61,21 @@ export const Header = () => {
   //     alert(searchRef.current.value);
   //   }
   // }
-  const handleSearch =async (event: any, setFieldValue: any) => {
-    const search = event.target.files[0]
-    if (searchRef) {
-        setFieldValue('searchRef', search)
-    }
-}
-  const formEl = document.querySelector('.form');
-  formEl?.addEventListener('submit', event => {
-    event.preventDefault()
+//   const handleSearch =async (event: any, setFieldValue: any) => {
+//     const search = event.target.files[0]
+//     if (searchRef) {
+//         setFieldValue('searchRef', search)
+//     }
+// }
+//   const formEl = document.querySelector('.form');
+//   formEl?.addEventListener('submit', event => {
+//     event.preventDefault()
 
-    const formData = new FormData();
-    const data = Object.fromEntries(formData);
-    console.log(data);
+//     const formData = new FormData();
+//     const data = Object.fromEntries(formData);
+//     console.log(data);
 
-  })
+//   })
 
 
   return (

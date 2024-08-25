@@ -10,7 +10,7 @@ export default function Detail() {
       <Navbar />
       <InfoEvent />
       <Modal />
-      <Album />
+      {/* <Album /> */}
       <Footer />
     </section>
   );
