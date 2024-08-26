@@ -3,8 +3,7 @@ import Link from 'next/link';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 export default function LoginRegister({ token }: { token: string }) {
-  const cookies = getCookie('token');
-
+  // const cookies = getCookie('token');
   return (
     <div className={` ${token ? 'hidden' : 'flex lg:hidden'} justify-end`}>
       <div className="dropdown  dropdown-end">

@@ -1,23 +1,19 @@
 
 'use client';
 import Link from 'next/link';
-import { deleteCookie, getData, navigate } from '@/libs/actions/server';
+import { deleteCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
 import React, { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
-import { event } from 'cypress/types/jquery';
 import { FaSearch } from "react-icons/fa";
-import { object } from 'yup';
-
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
-
   const [auth, setAuth] = useState('');
 
   useEffect(() => {
@@ -39,6 +35,7 @@ export const Header = () => {
     };
     auth(Cookies.get('token'));
   }, []);
+
   const role = auth;
   console.log(role);
 
@@ -62,21 +59,21 @@ export const Header = () => {
   //     alert(searchRef.current.value);
   //   }
   // }
-  const handleSearch =async (event: any, setFieldValue: any) => {
-    const search = event.target.files[0]
-    if (searchRef) {
-        setFieldValue('searchRef', search)
-    }
-}
-  const formEl = document.querySelector('.form');
-  formEl?.addEventListener('submit', event => {
-    event.preventDefault()
+//   const handleSearch =async (event: any, setFieldValue: any) => {
+//     const search = event.target.files[0]
+//     if (searchRef) {
+//         setFieldValue('searchRef', search)
+//     }
+// }
+//   const formEl = document.querySelector('.form');
+//   formEl?.addEventListener('submit', event => {
+//     event.preventDefault()
 
-    const formData = new FormData();
-    const data = Object.fromEntries(formData);
-    console.log(data);
+//     const formData = new FormData();
+//     const data = Object.fromEntries(formData);
+//     console.log(data);
 
-  })
+//   })
 
 
   return (

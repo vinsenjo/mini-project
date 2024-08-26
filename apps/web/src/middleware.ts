@@ -3,7 +3,7 @@ import { getCookie, getData } from './libs/actions/server';
 
 const eoPages = ['/dashboard'];
 const userPages = ['/profile'];
-const protectPages = ['/dashboard'];
+const protectPages = ['/dashboard', '/profile'];
 
 export async function middleware(request: NextRequest) {
   const token = await getCookie('token');
