@@ -3,14 +3,18 @@
 import Link from 'next/link';
 import { deleteCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
+
 import { FaSearch } from "react-icons/fa";
+
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
+import Search from './navbar/search';
+import Searchbar from './navbar/search';
 
 export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState('');
@@ -50,6 +54,7 @@ export const Header = () => {
       toast.error('error');
     }
   };
+
   const searchRef = useRef<HTMLInputElement>(null);
 
 
@@ -76,6 +81,7 @@ export const Header = () => {
 //   })
 
 
+
   return (
     <section className="z-30 w-full ">
       <nav className=" bg-white sm:px-5 px-3 justify-between py-2 top-1 flex flex-row  items-center  ">
@@ -85,22 +91,7 @@ export const Header = () => {
 
         {/* search */}
         <div className="text-white  items-center flex gap-2">
-          <div className='relative'>
-            <form className='form'>
-              <input
-                placeholder="Search....."
-                className="px-3 rounded-full md:w-[600px] w-[230px] mx-2  bg-white border-black placeholder:text-black border-2  lg:mr-10 text-black h-[40px] focus:outline-none"
-                ref={searchRef}
-              />
-              <button
-                className="absolute end-14 top-3 z-50"
-                >
-                <FaSearch className="text-black" />
-              </button>
-            </form>
-
-
-          </div>
+          <Searchbar />
 
           {/* avatar */}
           <UserAvatar token={isAuthenticated} role={role} logOut={logOut} />
@@ -109,6 +100,6 @@ export const Header = () => {
         </div>
         {/* <Hamburger auth={isAuthenticated} /> */}
       </nav>
-    </section>
+    </section >
   );
 };
