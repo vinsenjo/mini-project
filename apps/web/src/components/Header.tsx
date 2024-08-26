@@ -1,15 +1,14 @@
-
 'use client';
 import Link from 'next/link';
 import { deleteCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
 
-import { FaSearch } from "react-icons/fa";
+import { FaSearch } from 'react-icons/fa';
 
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
@@ -57,36 +56,35 @@ export const Header = () => {
 
   const searchRef = useRef<HTMLInputElement>(null);
 
-
   // const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
   //   if (searchRef.current) {
   //     event.preventDefault();
   //     alert(searchRef.current.value);
   //   }
   // }
-//   const handleSearch =async (event: any, setFieldValue: any) => {
-//     const search = event.target.files[0]
-//     if (searchRef) {
-//         setFieldValue('searchRef', search)
-//     }
-// }
-//   const formEl = document.querySelector('.form');
-//   formEl?.addEventListener('submit', event => {
-//     event.preventDefault()
+  //   const handleSearch =async (event: any, setFieldValue: any) => {
+  //     const search = event.target.files[0]
+  //     if (searchRef) {
+  //         setFieldValue('searchRef', search)
+  //     }
+  // }
+  //   const formEl = document.querySelector('.form');
+  //   formEl?.addEventListener('submit', event => {
+  //     event.preventDefault()
 
-//     const formData = new FormData();
-//     const data = Object.fromEntries(formData);
-//     console.log(data);
+  //     const formData = new FormData();
+  //     const data = Object.fromEntries(formData);
+  //     console.log(data);
 
-//   })
-
-
+  //   })
 
   return (
     <section className="z-30 w-full ">
       <nav className=" bg-white sm:px-5 px-3 justify-between py-2 top-1 flex flex-row  items-center  ">
         <Link href="/" passHref>
-          <h1 className="text-lg lg:text-2xl text-black font-bold">Ticketist</h1>
+          <h1 className="text-lg lg:text-2xl text-black font-bold">
+            Ticketist
+          </h1>
         </Link>
 
         {/* search */}
@@ -100,6 +98,6 @@ export const Header = () => {
         </div>
         {/* <Hamburger auth={isAuthenticated} /> */}
       </nav>
-    </section >
+    </section>
   );
 };

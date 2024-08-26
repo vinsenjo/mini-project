@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 interface IProps {
   token: string;
   role: string;
@@ -19,7 +19,19 @@ export default function EoAvatar({ token, role, logOut }: IProps) {
           className="dropdown-content menu bg-black text-white rounded-box z-[1] w-32 p-2 shadow gap-2"
         >
           <li>
-            <Link href={'/dashboard'}> Dashboard</Link>
+            <Link className="hover:bg-[#FF7B4F]" href={'/'}>
+              {' '}
+              Beranda
+            </Link>
+            {/* <a  className="hover:bg-[#FF7B4F]">
+              Dashboard
+            </a> */}
+          </li>
+          <li>
+            <Link className="hover:bg-[#FF7B4F]" href={'/dashboard'}>
+              {' '}
+              Dashboard
+            </Link>
             {/* <a  className="hover:bg-[#FF7B4F]">
               Dashboard
             </a> */}

@@ -69,13 +69,20 @@ export default function CheckoutForm() {
 
   const postDataFree = async () => {
     try {
-      await axios.post(`http://localhost:8000/api/transaction/free`, dataFree, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      const { data: response } = await axios.post(
+        `http://localhost:8000/api/transaction/free`,
+        dataFree,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         },
-      });
-      toast.success('success booking ticket'), navigate('/');
+      );
+      console.log(response);
+
+      toast.success('success booking ticket');
+      navigate('/');
     } catch (error) {
       console.error('Error Message:', error);
     }
@@ -92,13 +99,19 @@ export default function CheckoutForm() {
 
   const postDataPaid = async () => {
     try {
-      await axios.post(`http://localhost:8000/api/transaction/`, dataPaid, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+      const { data: response } = await axios.post(
+        `http://localhost:8000/api/transaction/`,
+        dataPaid,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
         },
-      });
-      toast.success('transaction created'), navigate('/');
+      );
+      console.log(response.data.redirect_url);
+      navigate(`${response.data.redirect_url}`);
+      // toast.success('transaction created'), navigate('/');
     } catch (error) {
       console.error('Error Message:', error);
     }

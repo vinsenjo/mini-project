@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCookie, getData } from './libs/actions/server';
 
-const eoPages = ['/dashboard'];
+const eoPages = ['/dashboard', 'createEvent'];
 const userPages = ['/profile'];
-const protectPages = ['/dashboard', '/profile'];
+const protectPages = ['/dashboard', '/profile', '/createEvent'];
 
 export async function middleware(request: NextRequest) {
   const token = await getCookie('token');
