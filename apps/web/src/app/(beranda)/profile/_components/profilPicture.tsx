@@ -9,8 +9,6 @@ import ImageInput from './imageInput';
 export default async function ProfilePicture() {
   const data = await getUser();
   const user = data.result.data
-  
-
   const src =
     'https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp';
   return (

@@ -166,6 +166,15 @@ export class AuthUser {
       responseError(res, error);
     }
   }
+
+
+
+
+
+
+
+
+  
   async GetUserByID(req: Request, res: Response) {
     try {
       const data = await prisma.user.findUnique({

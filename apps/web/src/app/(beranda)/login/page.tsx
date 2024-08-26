@@ -3,12 +3,10 @@
 import { FaUser } from 'react-icons/fa6';
 import { FaLock } from 'react-icons/fa';
 import { LoginSchema } from '@/libs/schema';
-import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
-import img from '@/../../public/concert.jpg';
+import { Form, Formik, FormikProps } from 'formik';
 import img2 from '@/../../public/login/login.jpg';
 import Image from 'next/image';
 import { Input } from '@/app/(beranda)/login/_components/input_login';
-import { FcGoogle } from 'react-icons/fc';
 import { GoogleLogin } from '@/app/(beranda)/login/_components/google_button';
 import Headings from './_components/heading';
 import LoginLine from './_components/login_hr_line';
@@ -17,21 +15,16 @@ import { UserLogin } from '@/types/user';
 import { loginUser } from '@/libs/actions/user';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { ok } from 'assert';
-import { result } from 'cypress/types/lodash';
-
 import { createCookie, navigate } from '@/libs/actions/server';
 
 const onLogin = async (data: UserLogin, actions: any) => {
   try {
     const res = await loginUser(data);
-
     if (res.status == 'error') throw res.msg;
     toast.success('login success');
-    createCookie("token",res.token)
+    createCookie('token', res.token);
     actions.resetForm();
-    navigate("/")
+    navigate('/');
   } catch (error) {
     toast.error(error as string);
     console.log(error);
@@ -39,7 +32,6 @@ const onLogin = async (data: UserLogin, actions: any) => {
 };
 
 export default function Login() {
-
   const initialValues: UserLogin = { data: '', password: '' };
   return (
     <div className="flex items-center md:justify-around md:bg-black relative justify-center h-screen max-w-screen-2xl">
@@ -66,7 +58,6 @@ export default function Login() {
               Sign in to access your{' '}
               <span className="text-[#32bc9b]">user</span> account
             </p>
-
             <Formik
               initialValues={initialValues}
               validationSchema={LoginSchema}
@@ -97,14 +88,11 @@ export default function Login() {
                         </div>
 
                         <button
-
                           type="submit"
                           className="bg-[#ff784b] lg:border-2 lg:border-[#ff784b] text-black py-2 rounded-full font-semibold  w-full  hover:bg-black hover:text-white  duration-100"
                         >
                           Sign In
                         </button>
-
-
                       </div>
                     </Form>
                   </div>
@@ -113,16 +101,16 @@ export default function Login() {
             </Formik>
             <LoginLine />
             <GoogleLogin />
-            
+
             <p className="ml-5 text-sm p-2 pb-5  max-w-[300px] text-white ">
               Don't have an account ?
               <span className="text-blue-600">
                 <Link href="/register">Register</Link>
               </span>
             </p>
-              <Link href={'/'}>
-                <button className="text-white  top-5 left-12">Back</button>
-              </Link>
+            <Link href={'/'}>
+              <button className="text-white  top-5 left-12">Back</button>
+            </Link>
           </div>
         </div>
       </div>

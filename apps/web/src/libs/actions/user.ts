@@ -11,6 +11,18 @@ export const registerUser = async (data: ISignUp) => {
   });
   return res.json();
 };
+export const setTransaction = async (data: any, token: string) => {
+  const res = await fetch('http://localhost:8000/api/transaction', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+  return res.json();
+};
+
 export const loginUser = async (data: EoLogin) => {
   const res = await fetch('http://localhost:8000/api/user/login', {
     headers: {
@@ -34,10 +46,9 @@ export const verifyUser = async (token: string) => {
 
   return { result: response, ok: res.ok };
 };
+
 export const getUser = async () => {
   const token = await getCookie('token');
-
-  
   const res = await fetch('http://localhost:8000/api/user/profile', {
     headers: {
       'Content-Type': 'application/json',

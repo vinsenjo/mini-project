@@ -5,6 +5,39 @@ import { Request, Response } from 'express';
 import { log } from 'handlebars';
 
 export class TransactionController {
+  async createTransactionFree(req: Request, res: Response) {
+    try {
+      const { quantity, eventId } = req.body;
+      const user = await prisma.user.findFirst({
+        where: { id: req.user?.id },
+      });
+      await prisma.$transaction(async (tx) => {
+        const transaction = await tx.transaction.create({
+          data: {
+            price: 0,
+            quantity,
+            totalDiscount: 0,
+            finalPrice: 0,
+            paymentLink: '',
+            userId: user?.id!,
+            eventId,
+          },
+        });
+        await tx.event.update({
+          data: { seats: { decrement: quantity } },
+          where: { id: eventId },
+        });
+
+        return res.status(201).send({
+          status: 'OK',
+          msg: ' Transaction created',
+          transaction,
+        });
+      });
+    } catch (error) {
+      responseError(res, error);
+    }
+  }
   async createTransaction(req: Request, res: Response) {
     try {
       const { price, quantity, totalDiscount, eventId } = req.body;
@@ -15,18 +48,18 @@ export class TransactionController {
       const point = user?.point || 0;
       const usePoint = req.body.usePoint || 0;
       if (usePoint % 10000 !== 0) throw 'point harus kelipatan 10000';
-      if (usePoint) {
-        if (usePoint > point) throw 'point kurang';
-        finalPrice -= usePoint;
-        await prisma.user.update({
-          data: { point: { decrement: usePoint } },
-          where: { id: user?.id },
-        });
-      }
-      if (user?.referral) {
-        finalPrice = finalPrice - finalPrice * 0.1;
-      }
       await prisma.$transaction(async (tx) => {
+        if (usePoint) {
+          if (usePoint > point) throw 'point kurang';
+          finalPrice -= usePoint;
+          await tx.user.update({
+            data: { point: { decrement: usePoint } },
+            where: { id: user?.id },
+          });
+        }
+        if (user?.referral) {
+          finalPrice = finalPrice - finalPrice * 0.1;
+        }
         const transaction = await tx.transaction.create({
           data: {
             price,
@@ -81,6 +114,7 @@ export class TransactionController {
         });
       });
     } catch (error) {
+      console.log(error);
       responseError(res, error);
     }
   }

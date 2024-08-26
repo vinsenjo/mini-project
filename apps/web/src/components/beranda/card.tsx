@@ -1,6 +1,7 @@
 import { getEvent } from '@/libs/actions/event';
 import Link from 'next/link';
 import Pagination from './pagination';
+import { navigate } from '@/libs/actions/server';
 
 interface IData {
   img: string;
@@ -13,7 +14,7 @@ export default async function Card() {
   const events = await getEvent();
   const data = events.result.event;
 
-  const total = Math.ceil(+events.result.eventAll.length / 8)
+  const total = Math.ceil(+events.result.eventAll.length / 8);
   // console.log(total);
 
   return (
@@ -22,9 +23,7 @@ export default async function Card() {
         {data.map((item, key) => (
           <div
             key={key}
-
-
-          className="card card-compact  bg-white w-full h-[500px] shadow-xl rounded-2xl"
+            className="card card-compact  bg-white w-full h-[500px] shadow-xl rounded-2xl"
           >
             <figure>
               <img
@@ -39,19 +38,18 @@ export default async function Card() {
               <p className="text-slate-400">{item.location}</p>
               <p className="text-red-700">{`IDR ${item.price.toLocaleString()}`}</p>
               <div className="card-actions flex justify-center pt-3">
-                <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full">
-                  <Link href={`/detail/${item.id}`}>Detail</Link>
-                </button>
+                <Link
+                  className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"
+                  href={`/detail/${item.id}`}
+                >
+                  Detail
+                </Link>
               </div>
             </div>
           </div>
         ))}
-        <Pagination
-            page=""
-            totalPages={total}
-            hasNextPage={true}/>
+        <Pagination page="" totalPages={total} hasNextPage={true} />
       </div>
-
     </section>
   );
 }

@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IEvent } from '@/types/event';
+import Link from 'next/link';
 
 export default function InfoEvent() {
   const [data, setData] = useState<IEvent>();
@@ -27,15 +28,13 @@ export default function InfoEvent() {
     };
     fetchData();
   }, []);
-  const date = new Date(data?.date as string)
-  const tanggal = date.toLocaleDateString()
-  console.log(typeof data?.image);
-  
-  
+  const date = new Date(data?.date as string);
+  const tanggal = date.toLocaleDateString();
+
   return (
-    <section className="bg-[#e1e1e1] text-black">
+    <section className="bg-[#e1e1e1] text-black flex-col lg:flex-row flex">
       <img
-        className="lg:h-full h-[250px] w-full"
+        className="lg:h-full pt-5 lg:py-10 px-5  lg:w-[50%]"
         src={data?.image}
         alt="Synchronize Fest"
         width={420}
@@ -43,12 +42,12 @@ export default function InfoEvent() {
       />
 
       {/* description */}
-      <div className="flex lg:flex-row flex-col lg:justify-evenly ">
+      <div className="flex flex-col lg:justify-evenly ">
         <div className=" px-6 py-6">
           <h1 className="font-extrabold text-2xl text-black">{data?.name}</h1>
           <div className="flex gap-2 text-slate-600 py-2">
             <FaCalendarAlt />
-           {tanggal}
+            {tanggal}
           </div>
           <div className="flex gap-2 text-slate-600">
             <GoClockFill />
@@ -58,27 +57,30 @@ export default function InfoEvent() {
             <FaLocationDot />
             {data?.location}
           </div>
-          <div className="w-[350px] py-2">
-            <p>
-            {data?.description}
-            </p>
+          <div className=" py-2">
+            <p>{data?.description}</p>
           </div>
         </div>
 
         {/* ticket */}
-        <div className="lg:pt-24 lg:px-28 pt-5 px-4 pb-12 ">
-          <div className="card bg-white w-96 shadow-xl h-16 rounded-lg">
+        <div className=" pt-3 px-4 pb-12 ">
+          <div className="card bg-white  lg:w-96 shadow-xl h-16 rounded-lg">
             <div className="card-actions flex justify-center pt-2">
-              <button
+              {/* <button
                 className="btn btn-primary border-2 font-semibold rounded-sm border-[#FF7B4F] bg-[#FF7B4F] text-white h-9 w-[300px] "
-                onClick={() =>
-                  (
-                    document.getElementById('my_modal_3') as HTMLFormElement
-                  ).showModal()
-                }
+                // onClick={() =>
+                //   (
+                //     document.getElementById('my_modal_3') as HTMLFormElement
+                //   ).showModal()
+                // }
+              >
+              </button> */}
+              <Link
+                className="btn btn-primary border-2 font-semibold rounded-sm border-[#FF7B4F] bg-[#FF7B4F] text-white h-9 w-[300px] "
+                href={`/checkout/${data?.id}`}
               >
                 See Tickets
-              </button>
+              </Link>
             </div>
           </div>
         </div>

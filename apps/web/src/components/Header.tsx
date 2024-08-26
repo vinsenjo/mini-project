@@ -1,17 +1,14 @@
 
 'use client';
 import Link from 'next/link';
-import { deleteCookie, getData, navigate } from '@/libs/actions/server';
+import { deleteCookie, navigate } from '@/libs/actions/server';
 import { toast } from 'react-toastify';
 import React, { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import UserAvatar from './navbar/userAvatar';
-import { event } from 'cypress/types/jquery';
 import { FaSearch } from "react-icons/fa";
-import { object } from 'yup';
-
 import EoAvatar from './navbar/eoAvatar';
 import LoginRegister from './navbar/LoginRegister';
 
@@ -38,6 +35,7 @@ export const Header = () => {
     };
     auth(Cookies.get('token'));
   }, []);
+
   const role = auth;
   console.log(role);
 

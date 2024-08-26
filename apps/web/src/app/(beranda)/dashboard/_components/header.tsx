@@ -6,7 +6,7 @@ export default async function DashboardHead() {
   const events = await getEoEvent();
   const data = events.data;
   return (
-    <div className="flex p-3 gap-3">
+    <div className="flex justify-center p-3 gap-3 ">
       <MiniBox
         svg={<FaCalendarCheck />}
         number={data.length}
