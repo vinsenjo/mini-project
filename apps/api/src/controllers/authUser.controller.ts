@@ -86,7 +86,9 @@ export class AuthUser {
         expirationDate.setMonth(expirationDate.getMonth() + 3);
         if (currentDate > expirationDate) {
           await prisma.user.update({
-            where: { referralCode: user.referral },
+            where: {
+              referralCode: user.referral !== null ? user.referral : undefined,
+            },
             data: { point: { decrement: 10000 } },
           });
           await prisma.user.update({
@@ -96,6 +98,29 @@ export class AuthUser {
         }
       }
 
+      if (user.referralCode !== '') {
+        const updateAllReferal = await prisma.user.updateMany({
+          where: {
+            createdAt: {
+              lt: new Date(new Date().setMonth(new Date().getMonth() - 3)),
+            },
+          },
+          data: {
+            referral: '',
+          },
+        });
+
+        const updatePoint = await prisma.user.update({
+          where: { referralCode: user.referralCode! },
+          data: { point: { decrement: updateAllReferal.count * 10000 } },
+        });
+      }
+      if (user.point < 0) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { point: 0 },
+        });
+      }
       res.status(200).send({
         status: 'OK',
         msg: 'Login Success',
@@ -136,6 +161,27 @@ export class AuthUser {
     try {
       res.status(200).send({
         user: req.user,
+      });
+    } catch (error) {
+      responseError(res, error);
+    }
+  }
+
+
+
+
+
+
+
+
+  
+  async GetUserByID(req: Request, res: Response) {
+    try {
+      const data = await prisma.user.findUnique({
+        where: { id: req.user?.id },
+      });
+      res.status(200).send({
+        data,
       });
     } catch (error) {
       responseError(res, error);

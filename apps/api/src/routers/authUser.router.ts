@@ -33,6 +33,11 @@ export class AuthRouterUser {
       this.verifyMiddleware.verifyTokenUser,
       this.authUser.DecodeToken,
     );
+    this.router.get(
+      '/profile',
+      this.verifyMiddleware.verifyTokenUser,
+      this.authUser.GetUserByID,
+    );
   }
 
   getRouter(): Router {

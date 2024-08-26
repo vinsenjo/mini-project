@@ -21,6 +21,7 @@ export class TransactionRouter {
       this.transactionController.createTransaction,
     );
     this.router.post('/status', this.transactionController.updateStatusTrans);
+    this.router.post('/free', this.transactionController.createTransactionFree);
   }
   getRouter(): Router {
     return this.router;

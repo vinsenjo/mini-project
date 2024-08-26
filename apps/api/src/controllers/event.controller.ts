@@ -37,7 +37,6 @@ export class EventController {
       });
     } catch (error) {
       console.log(error);
-
       responseError(res, error);
     }
   }
