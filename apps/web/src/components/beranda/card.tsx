@@ -1,46 +1,58 @@
-import Link from "next/link";
+import { getEvent } from '@/libs/actions/event';
+import Link from 'next/link';
+import Pagination from './pagination';
+import { navigate } from '@/libs/actions/server';
 
 interface IData {
-    img: string;
-    judul: string;
-    tanggal: string;
-    tempat: string;
-    harga: number;
+  img: string;
+  judul: string;
+  tanggal: string;
+  tempat: string;
+  harga: number;
 }
+export default async function Card() {
+  const events = await getEvent();
+  const data = events.result.event;
 
 
-export default function Card() {
-    const data: IData[] = [
-        { img: '/img/Synchronize Fest.jpeg', judul: 'Synchronize Fest', tanggal: 'Sat, Dec 14 • 14:00 AM', tempat: 'lapangan persuasif bandung', harga: 299.512 },
-        { img: '/img/jj3.jpeg', judul: 'Java Jazz', tanggal: 'Sat, Octa 19 • 20:00 PM', tempat: 'JX Internasional, Surabaya', harga: 799.512 },
-        { img: '/img/so71.jpeg', judul: 'sheila on7', tanggal: 'Sat, Dec 14 • 18:00 PM', tempat: 'Candi Prambanan', harga: 399.512 },
-        { img: '/img/Synchronize Fest.jpeg', judul: 'Synchronize Fest', tanggal: 'Sat, Dec 14 • 14:00 AM', tempat: 'lapangan persuasif bandung', harga: 0 },
-    ]
+  const total = Math.ceil(+events.result.eventAll.length / 8);
 
-    return (
-      
-            <section className="flex lg:flex-row flex-col gap-4 p-6">
-                {data.map((item, key) => (
-                    <div key={key} className="card card-compact bg-white w-[340px] shadow-xl rounded-2xl">
-                        <figure>
-                            <img
-                                src={item.img}
-                                alt="Music"
-                                className="rounded-2xl" />
-                        </figure>
-                        <div className="card-body px-5 pt-3 pb-8">
-                            <h2 className="card-title font-extrabold">{item.judul}</h2>
-                            <p>{item.tanggal}</p>
-                            <p className="text-slate-400">{item.tempat}</p>
-                            <p className="text-red-700">{`IDR ${item.harga}`}</p>
-                            <div className="card-actions flex justify-center pt-3">
-                                <button className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"><Link href="/detail" passHref >Buy Now</Link></button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+  // console.log(total);
+  return (
+    <section className="bg-[#e1e1e1] py-2 flex flex-col items-center justify-center ">
+      <div className="grid w-[90%] grid-cols-1 lg:grid-cols-4 lg:grid-rows-2 justify-center items-center bg-[#e1e1e1] lg:flex-row lg:flex-wrap flex-col gap-4 lg-gap-6 lg:py-6   text-black">
+        {data.map((item, key) => (
+          <div
+            key={key}
 
-            </section>
-      
-    )
+            className="card card-compact  bg-white w-full h-[500px] shadow-xl rounded-2xl"
+
+          >
+            <figure>
+              <img
+                src={item.image}
+                alt="Music"
+                className="rounded-top-2xl w-[100%] h-[260px] rounded-t-2xl hover:scale-110 duration-300"
+              />
+            </figure>
+            <div className="card-body px-5 pt-3 pb-8">
+              <h2 className="card-title font-extrabold">{item.name}</h2>
+              <p>{item.date}</p>
+              <p className="text-slate-400">{item.location}</p>
+              <p className="text-red-700">{`IDR ${item.price.toLocaleString()}`}</p>
+              <div className="card-actions flex justify-center pt-3">
+                <Link
+                  className="btn btn-primary border-2 font-semibold border-slate-500 rounded-full bg-white hover:border-[#FF7B4F] hover:bg-[#FF7B4F] hover:text-white h-9 w-full"
+                  href={`/detail/${item.id}`}
+                >
+                  Detail
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+        <Pagination page="" totalPages={total} hasNextPage={true} />
+      </div>
+    </section>
+  );
 }

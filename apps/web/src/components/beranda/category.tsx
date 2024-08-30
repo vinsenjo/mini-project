@@ -1,18 +1,33 @@
-import { FaMusic  } from "react-icons/fa";
-import { IoGameController } from "react-icons/io5";
-import { FaFilm } from "react-icons/fa";
-import { MdOutlineSportsBasketball } from "react-icons/md";
+import { FaMusic } from 'react-icons/fa';
+import { IoGameController } from 'react-icons/io5';
+import { FaFilm } from 'react-icons/fa';
+import { MdOutlineSportsBasketball } from 'react-icons/md';
 
+interface ICategory {
+  icon: any;
+  judul: string;
+}
 
 export default function Category() {
-    return (
-        <section className="bg-white">
-            <div className="py-9  flex flex-wrap justify-center lg:flex-row gap-7 lg:pl-19 lg:mx-8 text-black font-semibold font-serif  ">
-                <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px]  hover:scale-110 duration-500"><FaMusic size={17} className="text-[#32BC9B] "/><p className="">Music</p></button>
-                <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110 duration-500"><IoGameController  className="text-[#32BC9B] w-24  " />Game</button>
-                <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110 duration-500"><FaFilm   className="text-[#32BC9B] w-24 " />Anime</button>
-                <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] hover:scale-110 duration-500"><MdOutlineSportsBasketball  className="text-[#32BC9B] w-24 " />Sport</button>
-            </div>
-        </section>
-    )
+  const data: ICategory[] = [
+    { icon: <FaMusic />, judul: 'music' },
+    { icon: <IoGameController />, judul: 'Game' },
+    { icon: <FaFilm />, judul: 'Anime' },
+    { icon: <MdOutlineSportsBasketball />, judul: 'Sport' },
+  ]
+  return (
+    <section className="bg-white p-10">
+      <div className='grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+        {data.map((item, key) => (
+          <div key={key} className='flex justify-center'>
+            <button className="btn btn-outline border-2 px-5 py-2 rounded-xl border-[#BCBCBC] flex items-center gap-2 w-[160px] lg:w-[250px] lg:h-[70px] text-black">
+              <p>{item.icon}</p>
+              <p>{item.judul}</p>
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
+

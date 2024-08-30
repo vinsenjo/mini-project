@@ -7,18 +7,26 @@ import { LargeImage } from './_components/large_Image';
 import HasReg from './_components/hasReg';
 import { signUpSchema } from '@/libs/schema';
 import { useRouter } from 'next/navigation';
-import {ToastContainer,toast} from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { navigate } from '@/libs/actions/server';
 export default function Register() {
-  const router = useRouter();
-  const notify = () => toast.info('Wow so easy!');
-  const onRegister = async (data: ISignUp) => {
+  const onRegister = async (data: ISignUp, actions: any) => {
     try {
       const res = await registerUser(data);
+
+      // console.log(res);
+
       if (res.status == 'error') throw res.msg;
-      // toast('User registered');
-      router.push('/');
+
+      toast.success(
+        'register success, check your email account for verification',
+      );
+      actions.resetForm();
+      navigate('/');
     } catch (error) {
       toast.error(error as string);
+
       console.log(error);
     }
   };
@@ -36,10 +44,7 @@ export default function Register() {
         initialValues={initialValues}
         validationSchema={signUpSchema}
         onSubmit={(values, actions) => {
-          onRegister(values);
-          actions.resetForm();
-          console.log(values);
-          // router.push('/');
+          onRegister(values, actions);
         }}
       >
         {(props: FormikProps<ISignUp>) => {
@@ -47,7 +52,9 @@ export default function Register() {
             <div className="flex flex-col mx-3 items-center ">
               <Form>
                 <div className="flex   flex-col gap-4 lg:gap-5">
-                  <h1 className="text-5xl self-center font-bold ">Sign Up</h1>
+                  <h1 className="text-5xl self-center font-bold ">
+                    Sign Up as User
+                  </h1>
                   <InputRegister
                     type="text"
                     name="username"
@@ -78,7 +85,6 @@ export default function Register() {
                 </div>
               </Form>
               <HasReg />
-              <button onClick={notify}>asd</button>
             </div>
           );
         }}

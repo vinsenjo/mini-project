@@ -6,13 +6,20 @@ export interface ISignUp {
   referral: string;
 }
 
+export interface ISignUpEo {
+  creator: string;
+  email: string;
+  password: string;
+}
+
 export interface UserLogin {
   data: string;
   password: string;
 }
-export interface CreateTweet {
-  content: string;
-  media?: File | null;
+
+export interface EoLogin {
+  data: string;
+  password: string;
 }
 
 export interface UserState {

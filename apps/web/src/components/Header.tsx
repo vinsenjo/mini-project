@@ -1,52 +1,105 @@
-'use client'
-import Link from "next/link";
-import ModalLogin from "./modal/modalLogin";
-import { useState } from "react";
+
+'use client';
+import Link from 'next/link';
+import { deleteCookie, navigate } from '@/libs/actions/server';
+import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import UserAvatar from './navbar/userAvatar';
+
+import { FaSearch } from "react-icons/fa";
+
+import EoAvatar from './navbar/eoAvatar';
+import LoginRegister from './navbar/LoginRegister';
+import Search from './navbar/search';
+import Searchbar from './navbar/search';
 
 export const Header = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [openModalRegister, setOpenModalRegister] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState('');
+  const [auth, setAuth] = useState('');
 
-  const handleModal = () => {
-    setOpenModal(!openModal)
-  }
-  const handleModalRegister = () => {
-    setOpenModalRegister(!openModalRegister)
-  }
+  useEffect(() => {
+    const authToken = Cookies.get('token');
+    if (authToken) setIsAuthenticated(authToken!);
+  }, []);
+
+  useEffect(() => {
+    const auth = async (token: any) => {
+      await axios
+        .get('http://localhost:8000/api/user', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(async (res) => setAuth(res.data.user.role))
+        .catch((err) => console.log('no cookie'));
+    };
+    auth(Cookies.get('token'));
+  }, []);
+
+  const role = auth;
+  console.log(role);
+
+  const logOut = () => {
+    try {
+      if (!isAuthenticated) throw 'already logout';
+      deleteCookie('token');
+      setIsAuthenticated('');
+      toast.success('success logout');
+      navigate('/');
+    } catch (error) {
+      toast.error('error');
+    }
+  };
+
+  const searchRef = useRef<HTMLInputElement>(null);
+
+
+  // const handleSearch = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (searchRef.current) {
+  //     event.preventDefault();
+  //     alert(searchRef.current.value);
+  //   }
+  // }
+//   const handleSearch =async (event: any, setFieldValue: any) => {
+//     const search = event.target.files[0]
+//     if (searchRef) {
+//         setFieldValue('searchRef', search)
+//     }
+// }
+//   const formEl = document.querySelector('.form');
+//   formEl?.addEventListener('submit', event => {
+//     event.preventDefault()
+
+//     const formData = new FormData();
+//     const data = Object.fromEntries(formData);
+//     console.log(data);
+
+//   })
+
+
 
   return (
-    <section>
-      <nav className=" bg-black sm:px-20 px-3 lg:py-5 py-2 top-1 flex flex-row justify-between items-center  ">
-        <h1 className="text-white text-mono font-extrabold text-3xl hover:scale-125 duration-500"><Link href="/" passHref >X-ev</Link></h1>
-        <div className="flex text-white  lg:gap-10 gap-5 ">
-          <input type="search" placeholder="Search" className="md:w-[500px] w-[100px] h-[30px] focus:outline-none text-black " />
+    <section className="z-30 w-full ">
+      <nav className=" bg-white sm:px-5 px-3 justify-between py-2 top-1 flex flex-row  items-center  ">
+        <Link href="/" passHref>
+          <h1 className="text-lg lg:text-2xl text-black font-bold">Ticketist</h1>
+        </Link>
 
-          <div className="text-white flex gap-3">
-            <p className="cursor-pointer" onClick={handleModal}>Login</p>
-            <p className="cursor-pointer" onClick={handleModalRegister}>register</p>
-          </div>
+        {/* search */}
+        <div className="text-white  items-center flex gap-2">
+          <Searchbar />
 
-          <ModalLogin isOpen={openModal} onClose={handleModal}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/login"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
-
-          <ModalLogin isOpen={openModalRegister} onClose={handleModalRegister}>
-            <div className="absolute top-20 right-16 w-36 h-20 bg-white text-black rounded-lg ">
-              <h1 className="font-bold text-xl flex justify-center pt-2">X-ev</h1>
-              <div className="flex justify-between px-6 p-2">
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500"><Link href={"/register"}>User</Link></p>
-                <p className="hover:text-[#FF7B4F] hover:scale-110 duration-500">EO</p>
-              </div>
-            </div>
-          </ModalLogin>
+          {/* avatar */}
+          <UserAvatar token={isAuthenticated} role={role} logOut={logOut} />
+          <EoAvatar token={isAuthenticated} role={role} logOut={logOut} />
+          <LoginRegister token={isAuthenticated} />
         </div>
+        {/* <Hamburger auth={isAuthenticated} /> */}
       </nav>
-    </section>
-  )
+    </section >
+  );
 };
